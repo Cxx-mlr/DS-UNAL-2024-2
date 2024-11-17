@@ -1,0 +1,23 @@
+[project]
+name = "DS-UNAL-2024-2"
+dynamic = ["version"]
+description = "Solutions for the Data Structures course at Universidad Nacional de Colombia (2024-2), featuring labs, practical tasks, and theoretical exercises implemented in Python."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "rich>=13.9.4",
+    "typing-extensions>=4.12.2",
+]
+authors = [
+    { name = "Santiago Papiernik", email = "spapiernik12@gmail.com" },
+]
+license = { "file" = "LICENSE" }
+
+[tool.pdm]
+version = { source = "file", path = "src/__init__.py" }
+distribution = false
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+]
