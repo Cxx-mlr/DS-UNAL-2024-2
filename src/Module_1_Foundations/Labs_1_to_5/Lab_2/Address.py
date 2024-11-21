@@ -52,6 +52,17 @@ class Address:
 
     def get_apartment(self) -> str:
         return self.__apartment
+    
+    def __repr__(self) -> str:
+        return (
+            f"Address(street={self.__street!r}, "
+            f"nomenclature={self.__nomenclature!r}, "
+            f"neighborhood={self.__neighborhood!r}, "
+            f"city={self.__city!r}, "
+            f"building={self.__building!r}, "
+            f"apartment={self.__apartment!r}"
+            f")"
+        )
 
     def __str__(self):
         parts = []
