@@ -65,12 +65,27 @@ class User:
 
     def get_address(self) -> Address:
         return self.__address
+    
+    def __repr__(self):
+        return (
+            f"User("
+            f"name={self.__name!r}, "
+            f"id={self.__id!r}, "
+            f"birth_date={self.__birth_date!r}, "
+            f"birth_city={self.__birth_city!r}, "
+            f"phone_number={self.__phone_number!r}, "
+            f"email={self.__email!r}, "
+            f"address={self.__address!r}"
+            f")"
+        )
 
     def __str__(self):
-        return f"[yellow]Nombre:[/] {self.__name}" \
-               f"\n[yellow]ID:[/] {self.__id}" \
-               f"\n[yellow]Fecha de nacimiento:[/] {self.__birth_date}, " \
-               f"\n[yellow]Ciudad de nacimiento:[/] {self.__birth_city}" \
-               f"\n[yellow]Número de teléfono:[/] {self.__phone_number}, " \
-               f"\n[yellow]Email:[/] {self.__email}" \
-               f"\n[yellow]Address:[/] {self.__address}"
+        return (
+            f"[yellow]Nombre:[/] {self.__name}" \
+            f"\n[yellow]ID:[/] {self.__id}" \
+            f"\n[yellow]Fecha de nacimiento:[/] {self.__birth_date}, " \
+            f"\n[yellow]Ciudad de nacimiento:[/] {self.__birth_city}" \
+            f"\n[yellow]Número de teléfono:[/] {self.__phone_number}, " \
+            f"\n[yellow]Email:[/] {self.__email}" \
+            f"\n[yellow]Address:[/] {self.__address}"
+        )
