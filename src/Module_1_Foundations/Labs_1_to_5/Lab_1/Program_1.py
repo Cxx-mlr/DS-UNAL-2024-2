@@ -45,7 +45,7 @@ def main():
     values: list[int] = []
 
     print("\nA continuación, ingrese los números enteros uno por uno:\n")
-    for i, _ in enumerate(range(n), start=1):
+    for i in range(1, n + 1):
         values.append(
             int(input(f"{i}. Ingrese un número entero\n\n: "))
         )
