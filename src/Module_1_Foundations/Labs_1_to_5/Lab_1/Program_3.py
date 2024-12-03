@@ -24,7 +24,7 @@ def main():
         username = input("username: ")
         password = input("password: ")
 
-        if not username in fake_db or fake_db[username] != password:
+        if username not in fake_db or fake_db[username] != password:
             print(ACCESS_DENIED_MESSAGE, end="\n\n")
             continue
         else:
