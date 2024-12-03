@@ -3,7 +3,7 @@ from pathlib import Path
 import re
 
 def main():
-    print(f"[green]Programa 2[/]\n")
+    print("[green]Programa 2[/]\n")
 
     with open(Path(__file__).parent / "test_pr2.txt", "rt", encoding="utf-8") as fp:
         paragraphs = fp.read().split("\n\n")

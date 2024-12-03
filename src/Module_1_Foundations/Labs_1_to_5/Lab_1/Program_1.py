@@ -38,7 +38,7 @@ def average_(values: List[int]) -> Optional[int]:
     return sum_(values) / len(values)
 
 def main():
-    print(f"[green]Programa 1[/]\n")
+    print("[green]Programa 1[/]\n")
 
     n = int(input("Por favor, ingrese el número de datos que desea ingresar\n\n: "))
 

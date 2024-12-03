@@ -14,7 +14,7 @@ fake_db = {
 }
 
 def main():
-    print(f"[green]Programa 3[/]\n")
+    print("[green]Programa 3[/]\n")
 
     attempts_left = MAX_ATTEMPS
 
