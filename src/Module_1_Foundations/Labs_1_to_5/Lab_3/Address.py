@@ -17,43 +17,6 @@ class Address:
         self.__building = building
         self.__apartment = apartment
 
-    # def to_csv(self) -> str:
-    #     return " ".join(
-    #         (
-    #             self.__street,
-    #             self.__nomenclature,
-    #             self.__neighborhood,
-    #             self.__city,
-    #             self.__building,
-    #             self.__apartment
-    #         )
-    #     )
-    
-    # @staticmethod
-    # def from_csv(csv_string: str) -> Address:
-    #     parts = csv_string.split(" ")
-
-    #     if len(parts) != 6:
-    #         raise ValueError("CSV string must contain exactly six parts")
-
-    #     (
-    #         street,
-    #         nomenclature,
-    #         neighborhood,
-    #         city,
-    #         building,
-    #         apartment
-    #     ) = parts
-
-    #     return Address(
-    #         street=street,
-    #         nomenclature=nomenclature,
-    #         neighborhood=neighborhood,
-    #         city=city,
-    #         building=building,
-    #         apartment=apartment
-    #     )
-
     def set_street(self, street: str):
         self.__street = street
 
