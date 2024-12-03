@@ -1,5 +1,5 @@
 from rich import print
-from typing_extensions import List
+from typing_extensions import List, Optional
 
 def min_(values: List[int]) -> int:
     assert values, "min_() arg is an empty sequence"
@@ -31,14 +31,14 @@ def sum_(values: List[int]) -> int:
 
     return total
 
-def average_(values: List[int]) -> int:
+def average_(values: List[int]) -> Optional[int]:
     if not values:
         return None
 
     return sum_(values) / len(values)
 
 def main():
-    print(f"[green]Programa 1[/]\n")
+    print("[green]Programa 1[/]\n")
 
     n = int(input("Por favor, ingrese el número de datos que desea ingresar\n\n: "))
 

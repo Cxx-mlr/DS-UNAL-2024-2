@@ -8,34 +8,6 @@ class Date:
         self.__month = month
         self.__year = year
 
-    # def to_csv(self) -> str:
-    #     return " ".join(
-    #         (
-    #             self.__day,
-    #             self.__month,
-    #             self.__year
-    #         )
-    #     )
-    
-    # @staticmethod
-    # def from_csv(csv_string: str) -> Date:
-    #     parts = csv_string.split(" ")
-
-    #     if len(parts) != 3:
-    #         raise ValueError("CSV string must contain exactly three parts")
-        
-    #     (
-    #         day,
-    #         month,
-    #         year
-    #     ) = parts
-
-    #     return Date(
-    #         day=day,
-    #         month=month,
-    #         year=year
-    #     )
-
     def set_day(self, day: int):
         self.__day = day
 

@@ -9,7 +9,7 @@ class DoubleNode:
         self.__data = data
 
     def set_data(self, new_data: object):
-        self.__data == new_data
+        self.__data = new_data
 
     def get_data(self) -> object:
         return self.__data
