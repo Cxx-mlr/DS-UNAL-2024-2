@@ -26,7 +26,6 @@ def main():
 
         if username not in fake_db or fake_db[username] != password:
             print(ACCESS_DENIED_MESSAGE, end="\n\n")
-            continue
         else:
             print(ACCESS_GRANTED_MESSAGE)
             break
