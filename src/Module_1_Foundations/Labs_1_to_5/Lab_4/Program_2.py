@@ -22,7 +22,7 @@ def ask_user(msg: str = "Ingrese los datos del usuario") -> User:
     email: str = input("Email: ")
 
     birth_date = input("Fecha de nacimiento (dd-mm-aa): ").split("-")
-    if len(birth_date) == "3":
+    if len(birth_date) == 3:
         day, month, year = birth_date.split("-")
     else:
         day = 1
