@@ -6,7 +6,7 @@ from User import User
 
 def main():
     name: str = input("Nombre: ")
-    id: int = int(input("ID: "))
+    id_: int = int(input("ID: "))
     email: str = input("Email: ")
 
     birth_date = input("Fecha de nacimiento (dd-mm-aa): ")
@@ -35,7 +35,7 @@ def main():
 
     user = User(
         name=name,
-        id=id,
+        id=id_,
         birth_date=birth_date,
         birth_city=birth_city,
         phone_number=phone_number,
