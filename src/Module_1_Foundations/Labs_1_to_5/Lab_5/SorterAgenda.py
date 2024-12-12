@@ -34,5 +34,10 @@ class SorterAgenda:
             print(
                 f"[yellow bold]Nombre:[/] {user.get_name()} | "
                 f"[yellow bold]ID:[/] {user.get_id()} | "
+                # f"[yellow bold]Fecha de nacimiento:[/] {user.get_birth_date()} | "
+                # f"[yellow bold]Ciudad de nacimiento:[/] {user.get_birth_city()} | "
+                # f"[yellow bold]Teléfono:[/] {user.get_phone_number()} | "
+                # f"[yellow bold]Email:[/] {user.get_email()} | "
+                # f"[yellow bold]Dirección:[/] {user.get_address()}"
             )
             current_node = current_node.get_next()
