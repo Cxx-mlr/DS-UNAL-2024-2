@@ -1,0 +1,5 @@
+Juan-Perez 24567898 12 10 1980 Medellin 3003233234 juanperez@edl.edu.co kr74 4T-35 Boston Medellin null null
+Diego-Palacio 34568910 20 12 1979 Envigado 3013234567 diegopalacio@edl.edu.co cll65 3-29 Robledo Medellin Balcones-de-la-Quinta 405
+Camila-Jimenez 2345902 15 09 1985 Cali 3003234567 camilajimenez@edl.edu.co tr45 4S-73 Poblado Medellin null null
+Pedro-Gomez 1075689 20 02 1990 Popayan 3003012323 pedrogomez@edl.edu.co kr23 8-10 SanJuan Envigado Mirador 503
+Tatiana-Ramirez 2345934 15 11 1982 Medellin 3004567890 tatianaramirez@edl.edu.co cll5 4S-69 Poblado Medellin UrbColina 1023
