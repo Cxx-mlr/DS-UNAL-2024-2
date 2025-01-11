@@ -1,109 +1,136 @@
 from __future__ import annotations
+from rich import print
 
-from InventoryItem import InventoryItem
+from typing_extensions import Union, TextIO
+from io import StringIO
+import sys
 
-from Date import Date
+from config import REQUESTS_STATUS_FILENAME, DATA_PATH
+from utils import console, ask_in_range
 
-from contextlib import suppress
-
+from Equipment import Equipment
+from EquipmentList import EquipmentList
+from Inventory import Inventory
+from Request import Request
 from Session import Session
 
 
 class Researcher(Session):
-    def display_inventory(self):
-        for equipment in self._user_inventory.get_equipments():
-            print(equipment, end="", flush=True)
+    def output_inventory(self):
+        print(
+            f"\n[yellow]Inventario de {self.current.user.get_name()} ({self.current.user.get_id()})[/]\n"
+        )
+        for equipment in self.current.saved_equipment:
+            print(f"* {equipment}")
 
     def add_equipment(self):
-        print()
-        print("Ingrese los datos del equipo")
-        name = input("nombre: ")
-        serial_number = int(input("número de placa: "))
-        date = input("fecha de compra (dd-mm-aaaa): ").split("-")
-        price = int(input("valor de compra: "))
+        print("\n[green]Ingrese los datos solicitados[/]")
 
-        if len(date) == 3:
-            day = int(date[0])
-            month = int(date[1])
-            year = int(date[2])
-        else:
-            day, month, year = 1, 1, 2000
+        equipment = Equipment.ask()
 
-        item = InventoryItem(
-            username=self._user.get_name(),
-            user_id=self._user.get_id(),
-            name=name,
-            serial_number=serial_number,
-            purchase_date=Date(
-                day=day,
-                month=month,
-                year=year
-            ),
-            price=price
+        request = Request(
+            username=self.current.user.get_name(),
+            user_id=self.current.user.get_id(),
+            name=equipment.get_name(),
+            serial_number=equipment.get_serial_number(),
+            purchase_date=equipment.get_purchase_date(),
+            price=equipment.get_price(),
         )
 
-        self._user_add_requests.add(item)
-
-        self._user_add_requests.sort()
-        self._user_add_requests.save_to_file(filename="Control_de_cambios.txt")
+        request.set_action("agregar")
+        request.set_status("PENDING")
+        request.submit()
 
     def delete_equipment(self):
-        print()
-        print("Ingrese los datos del equipo")
-        serial_number = int(input("número de placa: "))
-        reason = input("razón: ")
+        print("\n[green]Ingrese los datos solicitados[/]")
 
-        item_index = self._user_inventory.find(
-            lambda item: item.get_serial_number() == serial_number
-        )
-        if item_index == -1:
-            print(f"No se ha encontrado un equipo con el número de placa {serial_number}")
-            return
-        
-        self._user_delete_requests.add(
-            self._user_inventory.get_items()[item_index]
+        equipment = Equipment.ask()
+
+        request = Request(
+            username=self.current.user.get_name(),
+            user_id=self.current.user.get_id(),
+            name=equipment.get_name(),
+            serial_number=equipment.get_serial_number(),
+            purchase_date=equipment.get_purchase_date(),
+            price=equipment.get_price(),
         )
 
-        self._user_delete_requests.sort()
-        self._user_delete_requests.save_to_file(filename="Control_de_cambios.txt")
+        request.set_action("eliminar")
+        request.set_status("PENDING")
+        request.submit()
 
-    def requests_status(self):
-        add_requests = self._user_add_requests
-        delete_requests = self._user_delete_requests
+    def output_requests_status(self, file: Union[StringIO, TextIO] = sys.stdout):
+        pending_requests = self.current.pending_requests
+        approved_requests = self.current.approved_requests
+        rejected_requests = self.current.rejected_requests
 
-        print(self._user_changelog)
+        print(
+            f"PENDIENTES: {pending_requests.size():<10} APROBADAS: {approved_requests.size():<10} RECHAZADAS: {rejected_requests.size()}",
+            file=file,
+        )
+
+        if not pending_requests.empty():
+            print("\nPENDIENTES", file=file)
+            print(f"{pending_requests}", file=file)
+
+        if not approved_requests.empty():
+            print("\nAPROBADAS", file=file)
+            print(f"{approved_requests}", file=file)
+
+        if not rejected_requests.empty():
+            print("\nRECHAZADAS", file=file)
+            print(f"{rejected_requests}", file=file)
+
+        if isinstance(file, StringIO):
+            save_path = DATA_PATH / REQUESTS_STATUS_FILENAME.format(
+                self.current.user.get_name(), self.current.user.get_id()
+            )
+            with open(save_path, "wt", encoding="utf-8") as fp:
+                fp.write(file.getvalue().strip())
+
+            print(f"\nSe ha generado el archivo [yellow]'{save_path.name}'[/]")
+
+    def save_requests_status(self):
+        return self.output_requests_status(file=StringIO())
 
     def save_inventory(self):
-        self._user_inventory.save_to_file(
-            filename=f"{self._user.get_name()} {self._user.get_id()}2.txt",
-            equipment=True
-        )
+        with Inventory(filename="InventarioGeneral.txt") as inventory:
+            user_inventory = inventory.filter_if(
+                lambda item: item.get_user_id() == self.current.user.get_id()
+            )
+
+            EquipmentList(
+                user_inventory.apply(lambda item: item.get_equipment())
+            ).sorted(lambda equipment: equipment.get_serial_number()).save_to_file(
+                filename=f"{self.current.user.get_name()} {self.current.user.get_id()}.txt"
+            )
 
     def display_menu(self):
         options = [
-            ("Consultar equipo en inventario", self.display_inventory),
+            ("Consultar equipo en inventario", self.output_inventory),
             ("Solicitar adición de equipo", self.add_equipment),
             ("Solicitar eliminación de equipo", self.delete_equipment),
-            ("Consultar estado de solicitudes", self.requests_status),
-            ("Generar información de inventario", self.save_inventory)
+            ("Consultar estado de solicitudes", self.output_requests_status),
+            ("Generar archivo con información de inventario", self.save_inventory),
+            ("Generar archivo con estado de solicitudes", self.save_requests_status),
         ]
 
-        for i, option in enumerate(options, start=1):
+        console.rule(
+            f"[yellow]{self.current.user.get_name()} ({self.current.user.get_id()})[/] [blue]\[rol: {self.current.credentials.get_role()}][/]"
+        )
+        print()
+        for index, option in enumerate(options, start=1):
             option_message, _ = option
 
-            print(f"{i}. {option_message}")
+            print(f"{index}. {option_message}")
         print()
 
-        choice = None
-        while True:
-            with suppress(Exception):
-                choice = int(input("Seleccione una opción: "))
+        choice = ask_in_range(
+            range_=range(1, len(options) + 1),
+            variadic=False,
+            prompt="Seleccione una opción: ",
+            error_message=f"Por favor ingrese un número entre 1 y {len(options)}",
+        )
 
-            if choice not in range(1, len(options) + 1):
-                print("[red](Opción incorrecta)[/]")
-                print()
-            else:
-                break
-
-        func = options[choice - 1][1]
-        func()
+        options[choice - 1][1]()
+        input("\n")
