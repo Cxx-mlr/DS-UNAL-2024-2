@@ -3,7 +3,7 @@ name = "DS-UNAL-2024-2"
 dynamic = ["version"]
 description = "Solutions for the Data Structures course at Universidad Nacional de Colombia (2024-2), featuring labs, practical tasks, and theoretical exercises implemented in Python."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 dependencies = [
     "rich>=13.9.4",
     "typing-extensions>=4.12.2",
