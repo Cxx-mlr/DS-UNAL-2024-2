@@ -3,57 +3,85 @@ from rich import print
 
 from typing_extensions import Optional, Union
 
+from config import PASSWORDS_PATH, EMPLOYEES_PATH
+from utils import ask_integer, ask_string
+
 from Agenda import Agenda
 from CredentialsList import CredentialsList
 from Researcher import Researcher
 from Administrator import Administrator
 
+import os
 
-def authenticate(agenda: Agenda, user_id: int, password: str) -> Optional[Union[Researcher, Administrator]]:
-    credentials_list = CredentialsList()
-    credentials_list.load_from_file(filename="Password.txt")
 
-    credentials = credentials_list.find(
-        lambda l_credentials: l_credentials.get_user_id() == user_id
-    )
+def authenticate(
+    agenda: Agenda, user_id: int, password: str
+) -> Optional[Union[Researcher, Administrator]]:
+    with CredentialsList(filename=PASSWORDS_PATH) as credentials_list:
+        credentials_node = credentials_list.find_if(
+            lambda credentials: credentials.get_user_id() == user_id
+        )
 
-    if not credentials:
+    if credentials_node is None:
         return None
+    else:
+        credentials = credentials_node.get_data()
 
     if not credentials.get_password() == password:
         return None
 
-    user = agenda.find(
-        lambda user: user.get_id() == credentials.get_user_id()
-    )
+    user_node = agenda.find_if(lambda user: user.get_id() == credentials.get_user_id())
 
-    if not user:
+    if user_node is None:
         return None
+
+    else:
+        user = user_node.get_data()
 
     if credentials.is_researcher():
         return Researcher(user)
+
     elif credentials.is_administrator():
         return Administrator(user)
 
-def main():
+
+def login(
+    user_id: Optional[int] = None, password: Optional[str] = None
+) -> Optional[Union[Researcher, Administrator]]:
     agenda = Agenda(capacity=13)
-    agenda.load_from_file(filename="Empleados.txt")
+    agenda.load_from_file(filename=EMPLOYEES_PATH)
 
-    # researcher
-    # cc = 24567898
-    # password = "j4an1980$"
-
-    # administrator
-    user_id = 2345902
-    password = "c4100l485Cal$"
+    if user_id is None:
+        user_id = ask_integer("ID: ", "Por favor, proporcione un ID de usuario válido.")
+    if password is None:
+        password = ask_string("Contraseña: ")
 
     session = authenticate(agenda, user_id, password)
 
     if not session:
-        print("Usuario o contraseña incorrectos")
+        print("Usuario o contraseña incorrectos.")
         exit()
 
-    session.display_menu()
+    return session
+
+
+def main():
+    # Investigador
+    user_id = 24567898
+    password = "j4an1980$"
+
+    # Administrador
+    user_id = 2345902
+    password = "c4100l485Cal$"
+
+    session = login(user_id=user_id, password=password)
+    while True:
+        try:
+            os.system("cls")
+            session.display_menu()
+        except KeyboardInterrupt:
+            return
+
 
 if __name__ == "__main__":
     main()
