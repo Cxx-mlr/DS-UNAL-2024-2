@@ -1,123 +1,249 @@
 from __future__ import annotations
 
+from typing_extensions import Literal
+
 from User import User
-
-from Inventory import Inventory
-from Changelog import Changelog
-from Agenda import Agenda
-
 from Credentials import Credentials
 from CredentialsList import CredentialsList
-import itertools
+from RequestList import RequestList
+from Inventory import Inventory
+from Changelog import Changelog
+from Equipment import Equipment
+from Agenda import Agenda
+
+from config import (
+    ADD_REQUESTS_PATH,
+    DELETE_REQUESTS_PATH,
+    PASSWORDS_PATH,
+    SAVED_INVENTORY_PATH,
+    DELETED_INVENTORY_PATH,
+    APPROVED_CHANGE_CONTROL_PATH,
+    REJECTED_CHANGE_CONTROL_PATH,
+    EMPLOYEES_PATH,
+)
+
 
 class Session:
     def __init__(self, user: User):
-        self._user = user
-    
-    @property
-    def _users(self) -> Agenda:
-        users = Agenda()
-        users.load_from_file(
-            filename="Empleados.txt"
-        )
+        self.__user = user
+        self.shared = self.Shared(self)
+        self.current = self.Current(session=self, shared=self.shared)
 
-        return users
-    
-    @property
-    def _inventory(self) -> Inventory:
-        inventory = Inventory()
-        inventory.load_from_file(
-            filename="InventarioGeneral.txt"
-        )
+    class Shared:
+        def __init__(self, session: Session):
+            self.__session = session
 
+        @property
+        def users(self) -> Agenda:
+            return Agenda(
+                self.credentials_list.apply(lambda credentials: credentials.get_user()),
+                filename=EMPLOYEES_PATH,
+                session=self.credentials_list.get_session(),
+            )
+
+        @property
+        def credentials_list(self) -> CredentialsList:
+            with CredentialsList(filename=PASSWORDS_PATH) as credentials_list:
+                return credentials_list
+
+        @property
+        def add_requests(self) -> RequestList:
+            return self.__session._get_requests(
+                ADD_REQUESTS_PATH, "PENDING", "agregar", filter_by_user=False
+            )
+
+        @property
+        def delete_requests(self) -> RequestList:
+            return self.__session._get_requests(
+                DELETE_REQUESTS_PATH, "PENDING", "eliminar", filter_by_user=False
+            )
+
+        @property
+        def pending_requests(self) -> RequestList:
+            return self.add_requests + self.delete_requests
+
+        @property
+        def approved_requests(self) -> RequestList:
+            return self.approved_changelog.apply(lambda entry: entry.get_request())
+
+        @property
+        def rejected_requests(self) -> RequestList:
+            return self.rejected_changelog.apply(lambda entry: entry.get_request())
+
+        @property
+        def non_pending_requests(self) -> RequestList:
+            return self.approved_requests + self.rejected_requests
+
+        @property
+        def requests(self) -> RequestList:
+            return self.pending_requests + self.non_pending_requests
+
+        @property
+        def saved_inventory(self) -> Inventory:
+            return self.__session._get_inventory(
+                SAVED_INVENTORY_PATH, filter_by_user=False
+            )
+
+        @property
+        def deleted_inventory(self) -> Inventory:
+            return self.__session._get_inventory(
+                DELETED_INVENTORY_PATH, filter_by_user=False
+            )
+
+        @property
+        def inventory(self) -> Inventory:
+            return self.saved_inventory + self.deleted_inventory
+
+        @property
+        def saved_equipment(self) -> Equipment:
+            return self.saved_inventory.apply(lambda item: item.get_equipment())
+
+        @property
+        def deleted_equipment(self) -> Equipment:
+            return self.deleted_inventory.apply(lambda item: item.get_equipment())
+
+        @property
+        def approved_changelog(self) -> Changelog:
+            return self.__session._get_changelog(
+                APPROVED_CHANGE_CONTROL_PATH, "APPROVED", filter_by_user=False
+            )
+
+        @property
+        def rejected_changelog(self) -> Changelog:
+            return self.__session._get_changelog(
+                REJECTED_CHANGE_CONTROL_PATH, "REJECTED", filter_by_user=False
+            )
+
+        @property
+        def changelog(self) -> Changelog:
+            return self.approved_changelog + self.rejected_changelog
+
+    class Current:
+        def __init__(self, session: Session, shared: Session.Shared):
+            self.__session = session
+            self.__shared = shared
+
+        @property
+        def user(self) -> User:
+            return self.__session._Session__user
+
+        @property
+        def credentials(self) -> Credentials:
+            node = self.__shared.credentials_list.find_if(
+                lambda credentials: credentials.get_user_id() == self.user.get_id()
+            )
+
+            if node is None:
+                raise RuntimeError(f"User with ID {self.user.get_id()} not found.")
+
+            return node.get_data()
+
+        @property
+        def add_requests(self) -> RequestList:
+            return self.__session._get_requests(
+                ADD_REQUESTS_PATH, "PENDING", "agregar", filter_by_user=True
+            )
+
+        @property
+        def delete_requests(self) -> RequestList:
+            return self.__session._get_requests(
+                DELETE_REQUESTS_PATH, "PENDING", "eliminar", filter_by_user=True
+            )
+
+        @property
+        def pending_requests(self) -> RequestList:
+            return self.add_requests + self.delete_requests
+
+        @property
+        def approved_requests(self) -> RequestList:
+            return self.approved_changelog.apply(lambda entry: entry.get_request())
+
+        @property
+        def rejected_requests(self) -> RequestList:
+            return self.rejected_changelog.apply(lambda entry: entry.get_request())
+
+        @property
+        def non_pending_requests(self) -> RequestList:
+            return self.approved_requests + self.rejected_requests
+
+        @property
+        def requests(self) -> RequestList:
+            return self.pending_requests + self.non_pending_requests
+
+        @property
+        def saved_inventory(self) -> Inventory:
+            return self.__session._get_inventory(
+                SAVED_INVENTORY_PATH, filter_by_user=True
+            )
+
+        @property
+        def deleted_inventory(self) -> Inventory:
+            return self.__session._get_inventory(
+                DELETED_INVENTORY_PATH, filter_by_user=True
+            )
+
+        @property
+        def inventory(self) -> Inventory:
+            return self.saved_inventory + self.deleted_inventory
+
+        @property
+        def saved_equipment(self) -> Equipment:
+            return self.saved_inventory.apply(lambda item: item.get_equipment())
+
+        @property
+        def deleted_equipment(self) -> Equipment:
+            return self.deleted_inventory.apply(lambda item: item.get_equipment())
+
+        @property
+        def approved_changelog(self) -> Changelog:
+            return self.__session._get_changelog(
+                APPROVED_CHANGE_CONTROL_PATH, "APPROVED", filter_by_user=True
+            )
+
+        @property
+        def rejected_changelog(self) -> Changelog:
+            return self.__session._get_changelog(
+                REJECTED_CHANGE_CONTROL_PATH, "REJECTED", filter_by_user=True
+            )
+
+        @property
+        def changelog(self) -> Changelog:
+            return self.approved_changelog + self.rejected_changelog
+
+    def _get_requests(
+        self,
+        path: str,
+        status: Literal["PENDING", "APPROVED", "REJECTED"],
+        action: Literal["agregar", "eliminar"],
+        filter_by_user: bool = True,
+    ) -> RequestList:
+        with RequestList(filename=path) as request_list:
+            if filter_by_user:
+                request_list = request_list.filter_if(
+                    lambda request: request.get_user_id() == self.__user.get_id()
+                )
+            request_list.set_status(status)
+            request_list.set_action(action)
+        return request_list
+
+    def _get_inventory(self, path: str, filter_by_user: bool = True) -> Inventory:
+        with Inventory(filename=path) as inventory:
+            if filter_by_user:
+                return inventory.filter_if(
+                    lambda item: item.get_user_id() == self.__user.get_id()
+                )
         return inventory
 
-    @property
-    def _add_requests(self) -> Inventory:
-        add_requests = Inventory()
-        add_requests.load_from_file(
-            filename="Solicitudes_agregar.txt"
-        )
-
-        return add_requests
-
-    @property
-    def _delete_requests(self) -> Inventory:
-        delete_requests = Inventory()
-        delete_requests.load_from_file(
-            filename="Solicitudes_eliminar.txt"
-        )
-
-        return delete_requests
-    
-    @property
-    def _requests(self) -> Inventory:
-        requests = Inventory()
-
-        for request in itertools.chain(self._add_requests, self._delete_requests):
-            requests.add(request)
-
-        return requests
-    
-    @property
-    def _changelog(self) -> Changelog:
-        changelog = Changelog()
-        changelog.load_from_file(
-            filename="Control_de_cambios.txt"
-        )
-
+    def _get_changelog(
+        self,
+        path: str,
+        status: Literal["PENDING", "APPROVED", "REJECTED"],
+        filter_by_user: bool = True,
+    ) -> Changelog:
+        with Changelog(filename=path) as changelog:
+            if filter_by_user:
+                changelog = changelog.filter_if(
+                    lambda entry: entry.get_user_id() == self.__user.get_id()
+                )
+            changelog.set_status(status)
         return changelog
-    
-    @property
-    def _credentials_list(self) -> CredentialsList:
-        credentials_list = CredentialsList()
-        credentials_list.load_from_file(
-            filename="Password.txt"
-        )
-
-        return credentials_list
-
-    @property
-    def _user_inventory(self) -> Inventory:
-        return self._inventory.filter(
-            lambda item: item.get_user_id() == self._user.get_id()
-        )
-    
-    @property
-    def _user_add_requests(self) -> Inventory:
-        return self._add_requests.filter(
-            lambda item: item.get_user_id() == self._user.get_id()
-        )
-
-    @property
-    def _user_delete_requests(self) -> Inventory:
-        return self._delete_requests.filter(
-            lambda item: item.get_user_id() == self._user.get_id()
-        )
-
-    @property
-    def _user_requests(self) -> Inventory:
-        user_requests = Inventory()
-
-        for request in itertools.chain(self._user_add_requests, self._user_delete_requests):
-            user_requests.add(request)
-
-        return user_requests
-
-    @property
-    def _user_changelog(self) -> Changelog:
-        return self._changelog.filter(
-            lambda entry: entry.get_user_id() == self._user.get_id()
-        )
-    
-    @property
-    def _user_credentials(self) -> Credentials:
-        return self._credentials_list.filter(
-            lambda credentials: credentials.get_user_id() == self._user.get_id()
-        )[0]
-
-    def get_username(self) -> str:
-        return self._user.get_name()
-    
-    def get_role(self) -> str:
-        return self._user_credentials.get_role()
