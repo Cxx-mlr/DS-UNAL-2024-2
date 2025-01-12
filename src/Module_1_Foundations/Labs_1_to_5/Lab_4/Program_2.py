@@ -1,8 +1,6 @@
 from rich import print
 from rich.console import Console
 
-console = Console()
-
 from List import List
 from DoubleList import DoubleList
 
@@ -10,7 +8,8 @@ from Address import Address
 from Date import Date
 from User import User
 
-from DoubleNode import DoubleNode
+console = Console()
+
 
 def ask_user(msg: str = "Ingrese los datos del usuario") -> User:
     print()
@@ -23,7 +22,7 @@ def ask_user(msg: str = "Ingrese los datos del usuario") -> User:
 
     birth_date = input("Fecha de nacimiento (dd-mm-aa): ").split("-")
     if len(birth_date) == 3:
-        day, month, year = birth_date.split("-")
+        day, month, year = birth_date
     else:
         day = 1
         month = 1
@@ -48,7 +47,7 @@ def ask_user(msg: str = "Ingrese los datos del usuario") -> User:
         neighborhood=neighborhood,
         city=city,
         building=building,
-        apartment=apartment
+        apartment=apartment,
     )
 
     user = User(
@@ -58,10 +57,11 @@ def ask_user(msg: str = "Ingrese los datos del usuario") -> User:
         birth_city=birth_city,
         phone_number=phone_number,
         email=email,
-        address=address
+        address=address,
     )
 
     return user
+
 
 def main():
     user_1 = User(
@@ -77,8 +77,8 @@ def main():
             neighborhood="Boston",
             city="Medellin",
             building=None,
-            apartment=None
-        )
+            apartment=None,
+        ),
     )
 
     user_2 = User(
@@ -94,8 +94,8 @@ def main():
             neighborhood="Robledo",
             city="Medellin",
             building="Balcones-de-la-Quinta",
-            apartment="405"
-        )
+            apartment="405",
+        ),
     )
 
     user_3 = User(
@@ -111,8 +111,8 @@ def main():
             neighborhood="Poblado",
             city="Medellin",
             building=None,
-            apartment=None
-        )
+            apartment=None,
+        ),
     )
 
     user_4 = User(
@@ -128,10 +128,10 @@ def main():
             neighborhood="SanJuan",
             city="Envigado",
             building="Mirador",
-            apartment="503"
-        )
+            apartment="503",
+        ),
     )
-    
+
     user_5 = User(
         name="Tatiana-Ramirez",
         id=2345934,
@@ -145,8 +145,8 @@ def main():
             neighborhood="Poblado",
             city="Medellin",
             building="UrbColina",
-            apartment="1023"
-        )
+            apartment="1023",
+        ),
     )
 
     console.rule("List")
@@ -165,12 +165,12 @@ def main():
     console.rule("DoubleList")
     print()
 
-    users_dl = DoubleList()
-    users_dl.add_last(user_1)
-    users_dl.add_last(user_2)
-    users_dl.add_last(user_3)
-    users_dl.add_last(user_4)
-    users_dl.add_last(user_5)
+    users_dl = DoubleList[User]()
+    users_dl.push_back(user_1)
+    users_dl.push_back(user_2)
+    users_dl.push_back(user_3)
+    users_dl.push_back(user_4)
+    users_dl.push_back(user_5)
 
     print(f"{users_dl}")
 
@@ -180,8 +180,8 @@ def main():
     users_l.add_first(user_6)
     users_l.add_last(user_7)
 
-    users_dl.add_first(user_6)
-    users_dl.add_last(user_7)
+    users_dl.push_front(user_6)
+    users_dl.push_back(user_7)
 
     print()
     console.rule("List")
@@ -195,9 +195,11 @@ def main():
 
     print(users_dl)
 
-    user_8 = ask_user("Ingrese un usuario para insertar después del tercer nodo en la lista doble")
+    user_8 = ask_user(
+        "Ingrese un usuario para insertar después del tercer nodo en la lista doble"
+    )
 
-    third_node = users_dl._DoubleList__head.get_next().get_next()
+    third_node = users_dl.begin().get_next().get_next()
     users_dl.add_after(third_node, user_8)
 
     print()
@@ -205,6 +207,7 @@ def main():
     print()
 
     print(users_dl)
+
 
 if __name__ == "__main__":
     main()

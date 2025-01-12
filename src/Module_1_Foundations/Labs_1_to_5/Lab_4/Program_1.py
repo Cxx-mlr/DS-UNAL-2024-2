@@ -6,6 +6,7 @@ from DoubleList import DoubleList
 
 console = Console()
 
+
 def main():
     console.rule("List")
     print()
@@ -32,15 +33,15 @@ def main():
     console.rule("DoubleList")
     print()
 
-    values_dl = DoubleList()
+    values_dl = DoubleList[int]()
 
-    values_dl.add_first(6)
-    values_dl.add_first(4)
+    values_dl.push_front(6)
+    values_dl.push_front(4)
 
     for even in range(8, 21, 2):
-        values_dl.add_last(even)
+        values_dl.push_back(even)
 
-    values_dl.add_first(2)
+    values_dl.push_front(2)
 
     print(values_dl)
 
@@ -49,6 +50,7 @@ def main():
     values_dl.remove(20)
 
     print(values_dl)
+
 
 if __name__ == "__main__":
     main()
