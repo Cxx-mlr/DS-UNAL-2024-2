@@ -4,6 +4,7 @@ from __future__ import annotations
 from SorterAgenda import SorterAgenda
 from Agenda import Agenda
 
+
 def main():
     sorter_agenda = SorterAgenda()
 
@@ -15,6 +16,7 @@ def main():
 
     sorter_agenda.sort()
     sorter_agenda.display()
+
 
 if __name__ == "__main__":
     main()

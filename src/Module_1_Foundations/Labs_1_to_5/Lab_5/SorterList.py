@@ -3,14 +3,19 @@ from typing_extensions import Self
 from List import List
 import random
 
+
 class SorterList:
     def __init__(self) -> Self:
         self.__list: List = List()
 
-    def initialize(self, k: int, *, a: int = -100, b: int = 100, unique: bool = False) -> None:
+    def initialize(
+        self, k: int, *, a: int = -100, b: int = 100, unique: bool = False
+    ) -> None:
         if unique and (b - a + 1) < k:
-            raise ValueError("Range [a, b] is too small to generate the required number of unique values.")
-        
+            raise ValueError(
+                "Range [a, b] is too small to generate the required number of unique values."
+            )
+
         if unique:
             random_data = random.sample(range(a, b + 1), k=k)
         else:

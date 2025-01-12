@@ -4,6 +4,7 @@ from Date import Date
 from Address import Address
 from User import User
 
+
 def main():
     birth_date = Date(day=1, month=8, year=2001)
     address = Address(
@@ -20,12 +21,13 @@ def main():
         birth_city="Africa",
         phone_number=9876543210,
         email="user@example.com",
-        address=address
+        address=address,
     )
 
     print(f"[green]Fecha de nacimiento[/]\n{birth_date}\n")
     print(f"[green]Dirección de residencia[/]\n{address}\n")
     print(f"[green]Información personal y de contacto[/]\n{user}\n")
+
 
 if __name__ == "__main__":
     main()

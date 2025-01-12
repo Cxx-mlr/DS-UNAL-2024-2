@@ -8,6 +8,7 @@ from Sorter import Sorter
 
 console = Console()
 
+
 def main():
     sorter = Sorter(capacity=10)
 
@@ -15,7 +16,7 @@ def main():
         "bubble_sort",
         "selection_sort",
         "insertion_sort",
-        "merge_sort"
+        "merge_sort",
     ):
         console.rule(" ".join(sorting_method.split("_")).title())
         sorter.initialize(10)
@@ -29,7 +30,7 @@ def main():
     sorter.initialize()
     sorter.merge_sort()
     value = random.choice(sorter.get_data())
-    
+
     print(sorter, end="\n\n")
     print(f"[cyan]Iniciando búsqueda binaria del valor: {value}[/cyan]")
     index = sorter.binary_search(value)
@@ -38,6 +39,7 @@ def main():
         print(f"[bold green]Valor encontrado en el índice: {index}[/bold green]")
     else:
         print("[bold red]Valor no encontrado en la lista.[/bold red]")
+
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 from rich import print
 from SorterList import SorterList
 
+
 def main():
     sorter_list = SorterList()
 
@@ -11,6 +12,7 @@ def main():
     sorter_list.sort()
     print("\n[bold green]Lista después de ordenar:[/bold green]")
     print(sorter_list)
+
 
 if __name__ == "__main__":
     main()
