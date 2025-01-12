@@ -1,16 +1,18 @@
 from __future__ import annotations
 
-from utils import console
+from utils import console, ask_string, format_for_csv, format_from_csv
+from typing_extensions import Optional
+
 
 class Address:
     def __init__(
         self,
-        street: str = "",
-        nomenclature: str = "",
-        neighborhood: str = "",
-        city: str = "",
-        building: str = "",
-        apartment: str = ""
+        street: Optional[str] = None,
+        nomenclature: Optional[str] = None,
+        neighborhood: Optional[str] = None,
+        city: Optional[str] = None,
+        building: Optional[str] = None,
+        apartment: Optional[str] = None,
     ) -> Address:
         self.__street = street
         self.__nomenclature = nomenclature
@@ -19,15 +21,32 @@ class Address:
         self.__building = building
         self.__apartment = apartment
 
+    def to_csv(self) -> str:
+        return (
+            f"{format_for_csv(self.__street)} "
+            f"{format_for_csv(self.__nomenclature)} "
+            f"{format_for_csv(self.__neighborhood)} "
+            f"{format_for_csv(self.__city)} "
+            f"{format_for_csv(self.__building)} "
+            f"{format_for_csv(self.__apartment)}"
+        )
+
     @classmethod
-    def ask(cls) -> Address:
-        console.rule("Dirección")
-        street = input("Calle: ")
-        nomenclature = input("Nomenclatura: ")
-        neighborhood = input("Barrio: ")
-        city = input("Ciudad: ")
-        building = input("Edificio: ")
-        apartment = input("Apartamento: ")
+    def from_csv(cls, csv_string: str) -> Address:
+        parts = csv_string.strip().split()
+        if len(parts) != 6:
+            raise ValueError(
+                f"La cadena CSV debe contener exactamente 6 partes separadas por espacios, pero tiene {len(parts)} partes: {parts}"
+            )
+
+        try:
+            formatted_parts = list(map(format_from_csv, parts))
+        except Exception as e:
+            raise ValueError(
+                f"Se produjo un error durante el formateo de las partes: {e}"
+            )
+
+        street, nomenclature, neighborhood, city, building, apartment = formatted_parts
 
         return cls(
             street=street,
@@ -35,7 +54,27 @@ class Address:
             neighborhood=neighborhood,
             city=city,
             building=building,
-            apartment=apartment
+            apartment=apartment,
+        )
+
+    @classmethod
+    def ask(cls) -> Address:
+        console.rule("Dirección")
+
+        street = ask_string("Calle: ")
+        nomenclature = ask_string("Nomenclatura: ")
+        neighborhood = ask_string("Barrio: ")
+        city = ask_string("Ciudad: ")
+        building = ask_string("Edificio: ")
+        apartment = ask_string("Apartamento: ")
+
+        return cls(
+            street=street,
+            nomenclature=nomenclature,
+            neighborhood=neighborhood,
+            city=city,
+            building=building,
+            apartment=apartment,
         )
 
     def set_street(self, street: str):
@@ -73,7 +112,7 @@ class Address:
 
     def get_apartment(self) -> str:
         return self.__apartment
-    
+
     def __repr__(self) -> str:
         return (
             f"Address(street={self.__street!r}, "
@@ -87,7 +126,7 @@ class Address:
 
     def __str__(self):
         parts = []
-        
+
         if self.__street:
             parts.append(f"{self.__street}")
         if self.__nomenclature:
