@@ -15,7 +15,7 @@ import os
 
 
 def authenticate(
-    agenda: Agenda, user_id: int, password: str
+    agenda: UserList, user_id: int, password: str
 ) -> Optional[Union[Researcher, Administrator]]:
     with CredentialsList(filename=PASSWORDS_PATH) as credentials_list:
         credentials_node = credentials_list.find_if(
@@ -48,7 +48,7 @@ def authenticate(
 def login(
     user_id: Optional[int] = None, password: Optional[str] = None
 ) -> Optional[Union[Researcher, Administrator]]:
-    agenda = Agenda(capacity=13)
+    agenda = UserList(capacity=13)
     agenda.load_from_file(filename=EMPLOYEES_PATH)
 
     if user_id is None:

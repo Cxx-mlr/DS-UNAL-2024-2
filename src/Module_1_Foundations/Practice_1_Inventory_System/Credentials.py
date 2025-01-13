@@ -41,7 +41,7 @@ class Credentials:
     def get_user(self) -> User:
         from UserList import UserList
 
-        with Agenda(filename=EMPLOYEES_PATH) as users:
+        with UserList(filename=EMPLOYEES_PATH) as users:
             node = users.find_if(lambda user: user.get_id() == self.get_user_id())
 
             if node is None:

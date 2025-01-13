@@ -34,8 +34,8 @@ class Session:
             self.__session = session
 
         @property
-        def users(self) -> Agenda:
-            return Agenda(
+        def users(self) -> UserList:
+            return UserList(
                 self.credentials_list.apply(lambda credentials: credentials.get_user()),
                 filename=EMPLOYEES_PATH,
                 session=self.credentials_list.get_session(),
