@@ -161,7 +161,7 @@ class Request(Equipment):
         self.__status = status
 
     def get_user(self) -> User:
-        from Agenda import Agenda
+        from UserList import UserList
 
         with Agenda(filename=EMPLOYEES_PATH) as users:
             node = users.find_if(lambda user: user.get_id() == self.get_user_id())

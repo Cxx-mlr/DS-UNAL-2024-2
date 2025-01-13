@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from Equipment import Equipment
     from Request import Request
 
-from Agenda import Agenda
+from UserList import UserList
 from Inventory import Inventory
 from User import User
 from RequestList import RequestList

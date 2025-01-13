@@ -6,7 +6,7 @@ from typing_extensions import Optional, Union
 from config import PASSWORDS_PATH, EMPLOYEES_PATH
 from utils import ask_integer, ask_string
 
-from Agenda import Agenda
+from UserList import UserList
 from CredentialsList import CredentialsList
 from Researcher import Researcher
 from Administrator import Administrator

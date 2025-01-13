@@ -9,7 +9,7 @@ from RequestList import RequestList
 from Inventory import Inventory
 from Changelog import Changelog
 from Equipment import Equipment
-from Agenda import Agenda
+from UserList import UserList
 
 from config import (
     ADD_REQUESTS_PATH,
