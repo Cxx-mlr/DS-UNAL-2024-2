@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing_extensions import Optional
 from Node import Node
 
-from copy import deepcopy
 
 class List:
     def __init__(self) -> List:
@@ -14,10 +13,10 @@ class List:
 
     def size(self) -> int:
         return self.__size
-    
+
     def set_size(self, new_size: int):
         raise NotImplementedError()
-    
+
     def is_empty(self) -> bool:
         return self.__size == 0
 
@@ -54,7 +53,7 @@ class List:
     def remove_first(self) -> Optional[Node]:
         if self.is_empty():
             raise RuntimeError("Cannot remove from an empty list")
-        
+
         if self.__head is self.__tail:
             removed_node = self.__head
 
@@ -69,7 +68,7 @@ class List:
 
         self.__size -= 1
         return removed_node
-    
+
     def remove_last(self) -> Optional[Node]:
         if self.is_empty():
             raise RuntimeError("Cannot remove from an empty list")
@@ -91,20 +90,21 @@ class List:
 
         self.__size -= 1
         return removed_node
-    
+
     def remove(self, data: object) -> Optional[Node]:
         if self.is_empty():
             raise RuntimeError("Cannot remove from an empty list")
-        
+
         node = self.__head
 
         if node.get_data() == data:
             return self.remove_first()
-        
+
         while (next := node.get_next()) is not None and next.get_data() != data:
             node = next
 
-        if next is None: return None
+        if next is None:
+            return None
 
         if next is self.__tail:
             return self.remove_last()
@@ -122,12 +122,12 @@ class List:
             f"size={self.__size!r}"
             f")"
         )
-    
+
     def __str__(self) -> str:
         output = ""
 
         node = self.__head
-        while node != None:
+        while node is not None:
             node_labels = tuple()
 
             if node is self.__head:

@@ -4,6 +4,7 @@ from Date import Date
 from Address import Address
 from User import User
 
+
 def main():
     name: str = input("Nombre: ")
     id_: int = int(input("ID: "))
@@ -30,7 +31,7 @@ def main():
         neighborhood=neighborhood,
         city=city,
         building=building,
-        apartment=apartment
+        apartment=apartment,
     )
 
     user = User(
@@ -40,10 +41,11 @@ def main():
         birth_city=birth_city,
         phone_number=phone_number,
         email=email,
-        address=address
+        address=address,
     )
 
     print(f"\n[green]Información personal y de contacto[/]\n{user}\n")
+
 
 if __name__ == "__main__":
     main()

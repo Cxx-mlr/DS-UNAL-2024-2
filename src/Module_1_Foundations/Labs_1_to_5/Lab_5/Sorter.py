@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing_extensions import Self, List, Optional
 import random
 
+
 class Sorter:
     def __init__(self, capacity: int) -> Self:
         self.__capacity = capacity
@@ -10,7 +11,9 @@ class Sorter:
 
     def initialize(self, a: int = -100, b: int = 100, unique: bool = False):
         if unique and (b - a + 1) < self.__capacity:
-            raise ValueError("Range [a, b] is too small to generate the required number of unique values.")
+            raise ValueError(
+                "Range [a, b] is too small to generate the required number of unique values."
+            )
 
         if unique:
             random_data = random.sample(range(a, b + 1), k=self.__capacity)
@@ -25,7 +28,10 @@ class Sorter:
             swap_occurred = False
             for j in range(self.__capacity - i - 1):
                 if self.__data[j] > self.__data[j + 1]:
-                    self.__data[j], self.__data[j + 1] = self.__data[j + 1], self.__data[j]
+                    self.__data[j], self.__data[j + 1] = (
+                        self.__data[j + 1],
+                        self.__data[j],
+                    )
                     swap_occurred = True
             if not swap_occurred:
                 break
@@ -36,8 +42,11 @@ class Sorter:
             for j in range(i + 1, self.__capacity):
                 if self.__data[j] < self.__data[min_index]:
                     min_index = j
-            self.__data[i], self.__data[min_index] = self.__data[min_index], self.__data[i]
-                
+            self.__data[i], self.__data[min_index] = (
+                self.__data[min_index],
+                self.__data[i],
+            )
+
     def insertion_sort(self) -> None:
         for i in range(1, self.__capacity):
             j = i - 1
@@ -100,31 +109,29 @@ class Sorter:
     def __binary_search_impl(self, value, left: int, right: int):
         if left > right:
             return -1
-            
+
         middle = (left + right) // 2
-        
+
         if value < self.__data[middle]:
             return self.__binary_search_impl(value, left, middle - 1)
         elif value > self.__data[middle]:
             return self.__binary_search_impl(value, middle + 1, right)
         else:
             return middle
-        
-    def binary_search(self, value: object, left: Optional[int] = None, right: Optional[int] = None) -> int:
+
+    def binary_search(
+        self, value: object, left: Optional[int] = None, right: Optional[int] = None
+    ) -> int:
         left = left or 0
         right = right or self.__capacity - 1
 
         return self.__binary_search_impl(value=value, left=left, right=right)
-    
+
     def get_data(self) -> List:
         return self.__data
 
     def __repr__(self) -> str:
-        return (
-            "Sorter("
-            f"capacity={self.__capacity!r}",
-            ")"
-        )
-    
+        return ("Sorter(" f"capacity={self.__capacity!r}", ")")
+
     def __str__(self) -> str:
         return f"{self.__data}"

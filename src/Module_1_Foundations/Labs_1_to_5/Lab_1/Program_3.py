@@ -10,8 +10,9 @@ fake_db = {
     "Juan1223": "J12an*.",
     "Maria2345": "M23a*.",
     "Pablo1459": "P14o*.",
-    "Ana3456": "A34a*"
+    "Ana3456": "A34a*",
 }
+
 
 def main():
     print("[green]Programa 3[/]\n")
@@ -31,6 +32,7 @@ def main():
             break
     else:
         print(ACCESS_BLOCKED_MESSAGE)
+
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 from rich import print
 from typing_extensions import List, Optional
 
+
 def min_(values: List[int]) -> int:
     assert values, "min_() arg is an empty sequence"
 
@@ -11,6 +12,7 @@ def min_(values: List[int]) -> int:
             minimum = value
 
     return minimum
+
 
 def max_(values: List[int]) -> int:
     assert values, "max_() arg is an empty sequence"
@@ -23,6 +25,7 @@ def max_(values: List[int]) -> int:
 
     return maximum
 
+
 def sum_(values: List[int]) -> int:
     total = 0
 
@@ -31,11 +34,13 @@ def sum_(values: List[int]) -> int:
 
     return total
 
+
 def average_(values: List[int]) -> Optional[int]:
     if not values:
         return None
 
     return sum_(values) / len(values)
+
 
 def main():
     print("[green]Programa 1[/]\n")
@@ -46,9 +51,7 @@ def main():
 
     print("\nA continuación, ingrese los números enteros uno por uno:\n")
     for i in range(1, n + 1):
-        values.append(
-            int(input(f"{i}. Ingrese un número entero\n\n: "))
-        )
+        values.append(int(input(f"{i}. Ingrese un número entero\n\n: ")))
 
         print()
 
@@ -61,6 +64,7 @@ def main():
     print(f"Máximo: {maximum}")
     print(f"Suma: {total}")
     print(f"Promedio: {average}")
+
 
 if __name__ == "__main__":
     main()

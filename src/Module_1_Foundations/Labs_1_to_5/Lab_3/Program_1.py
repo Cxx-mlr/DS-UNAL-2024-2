@@ -6,6 +6,7 @@ from User import User
 
 from Agenda import Agenda
 
+
 def main():
     user_1 = User(
         name="Juan-Perez",
@@ -20,8 +21,8 @@ def main():
             neighborhood="Boston",
             city="Medellin",
             building=None,
-            apartment=None
-        )
+            apartment=None,
+        ),
     )
 
     user_2 = User(
@@ -37,8 +38,8 @@ def main():
             neighborhood="Robledo",
             city="Medellin",
             building="Balcones-de-la-Quinta",
-            apartment="405"
-        )
+            apartment="405",
+        ),
     )
 
     user_3 = User(
@@ -54,8 +55,8 @@ def main():
             neighborhood="Poblado",
             city="Medellin",
             building=None,
-            apartment=None
-        )
+            apartment=None,
+        ),
     )
 
     user_4 = User(
@@ -71,10 +72,10 @@ def main():
             neighborhood="SanJuan",
             city="Envigado",
             building="Mirador",
-            apartment="503"
-        )
+            apartment="503",
+        ),
     )
-    
+
     user_5 = User(
         name="Tatiana-Ramirez",
         id=2345934,
@@ -88,8 +89,8 @@ def main():
             neighborhood="Poblado",
             city="Medellin",
             building="UrbColina",
-            apartment="1023"
-        )
+            apartment="1023",
+        ),
     )
 
     agenda = Agenda(capacity=10)
@@ -100,17 +101,18 @@ def main():
     agenda.add_user(user_4)
     agenda.add_user(user_5)
 
-    correct_user_id  : int = 34568910
-    incorrect_user_id: int = 11111111
+    correct_user_id: int = 34568910
+    # incorrect_user_id: int = 11111111
 
     index = agenda.find_user(user_id=correct_user_id)
 
     if index != -1:
         print(f"[green]User found at index: {index}[/]")
     else:
-        print(f"[red]User not found[/]")
+        print("[red]User not found[/]")
 
     agenda.save_to_file()
+
 
 if __name__ == "__main__":
     main()
