@@ -27,9 +27,9 @@ class InventoryItem(Equipment):
         )
 
     def get_user(self) -> User:
-        from Agenda import Agenda
+        from UserList import UserList
 
-        with Agenda(filename=EMPLOYEES_PATH) as users:
+        with UserList(filename=EMPLOYEES_PATH) as users:
             return users.find_if(
                 lambda user: user.get_id() == self.get_user_id()
             ).get_data()

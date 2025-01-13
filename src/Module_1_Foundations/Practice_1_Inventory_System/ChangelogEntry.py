@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from Equipment import Equipment
     from Request import Request
 
-from Agenda import Agenda
+from UserList import UserList
 from Inventory import Inventory
 from User import User
 from RequestList import RequestList
@@ -55,7 +55,7 @@ class ChangelogEntry:
         return request
 
     def get_user(self) -> User:
-        with Agenda(filename=EMPLOYEES_PATH) as users:
+        with UserList(filename=EMPLOYEES_PATH) as users:
             node = users.find_if(lambda user: user.get_id() == self.get_user_id())
 
             if node is None:

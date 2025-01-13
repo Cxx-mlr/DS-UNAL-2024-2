@@ -9,7 +9,7 @@ from RequestList import RequestList
 from Inventory import Inventory
 from Changelog import Changelog
 from Equipment import Equipment
-from Agenda import Agenda
+from UserList import UserList
 
 from config import (
     ADD_REQUESTS_PATH,
@@ -34,8 +34,8 @@ class Session:
             self.__session = session
 
         @property
-        def users(self) -> Agenda:
-            return Agenda(
+        def users(self) -> UserList:
+            return UserList(
                 self.credentials_list.apply(lambda credentials: credentials.get_user()),
                 filename=EMPLOYEES_PATH,
                 session=self.credentials_list.get_session(),

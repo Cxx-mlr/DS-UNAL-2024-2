@@ -4,7 +4,7 @@ from FileBackedList import FileBackedList
 from typing_extensions import List
 
 
-class Agenda(FileBackedList[User]):
+class UserList(FileBackedList[User]):
     T = User
 
     def choose(self) -> List[int]:
