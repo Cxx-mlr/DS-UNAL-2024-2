@@ -14,9 +14,9 @@ from Role import Role
 class Credentials:
     def __init__(
         self,
-        user_id: int,
-        password: str,
-        role: str = Literal["investigador", "administrador"],
+        user_id: Optional[int] = None,
+        password: Optional[str] = None,
+        role: Optional[Literal["investigador", "administrador"]] = None,
     ):
         assert role in (
             "investigador",

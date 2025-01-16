@@ -24,11 +24,11 @@ from config import (
 class ChangelogEntry:
     def __init__(
         self,
-        user_id: int,
-        serial_number: int,
-        action: Literal["agregar", "eliminar"],
-        date_time: DateTime,
-        status: Literal["PENDING", "APPROVED", "REJECTED"] = "PENDING",
+        user_id: Optional[int] = None,
+        serial_number: Optional[int] = None,
+        action: Optional[Literal["agregar", "eliminar"]] = None,
+        date_time: Optional[DateTime] = None,
+        status: Optional[Literal["PENDING", "APPROVED", "REJECTED"]] = None,
     ) -> ChangelogEntry:
         self.__status: Optional[Literal["agregar", "eliminar"]] = None
         self.__user_id = int(user_id)

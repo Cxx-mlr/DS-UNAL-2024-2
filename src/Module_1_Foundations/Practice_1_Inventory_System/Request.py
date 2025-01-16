@@ -24,12 +24,12 @@ if TYPE_CHECKING:
 class Request(Equipment):
     def __init__(
         self,
-        username: str,
-        user_id: int,
-        name: str,
-        serial_number: int,
-        purchase_date: Date,
-        price: int,
+        username: Optional[str] = None,
+        user_id: Optional[int] = None,
+        name: Optional[str] = None,
+        serial_number: Optional[int] = None,
+        purchase_date: Optional[Date] = None,
+        price: Optional[int] = None,
     ) -> Request:
         self.__action: Optional[Literal["agregar", "eliminar"]] = None
         self.__status: Optional[Literal["PENDING", "APPROVED", "REJECTED"]] = None

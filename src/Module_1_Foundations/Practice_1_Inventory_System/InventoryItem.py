@@ -10,12 +10,12 @@ from config import EMPLOYEES_PATH
 class InventoryItem(Equipment):
     def __init__(
         self,
-        username: str,
-        user_id: int,
-        name: str,
-        serial_number: int,
-        purchase_date: Date,
-        price: int,
+        username: Optional[str] = None,
+        user_id: Optional[int] = None,
+        name: Optional[str] = None,
+        serial_number: Optional[int] = None,
+        purchase_date: Optional[Date] = None,
+        price: Optional[int] = None,
     ) -> InventoryItem:
         self.__username = username
         self.__user_id = int(user_id)
