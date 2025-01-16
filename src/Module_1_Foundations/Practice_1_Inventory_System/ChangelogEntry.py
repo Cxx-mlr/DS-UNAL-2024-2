@@ -64,6 +64,8 @@ class ChangelogEntry:
             return node.get_data()
 
     def get_equipment(self) -> Equipment:
+        from Equipment import Equipment
+
         with (
             Inventory(filename=SAVED_INVENTORY_PATH) as saved_inventory,
             Inventory(filename=DELETED_INVENTORY_PATH) as deleted_inventory,
