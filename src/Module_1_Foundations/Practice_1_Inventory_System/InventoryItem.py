@@ -1,6 +1,8 @@
 from __future__ import annotations
-from Date import Date
 
+from typing import Optional
+
+from Date import Date
 from Equipment import Equipment
 from User import User
 
@@ -18,7 +20,7 @@ class InventoryItem(Equipment):
         price: Optional[int] = None,
     ) -> InventoryItem:
         self.__username = username
-        self.__user_id = int(user_id)
+        self.__user_id = user_id
         super().__init__(
             name=name,
             serial_number=serial_number,
@@ -50,10 +52,10 @@ class InventoryItem(Equipment):
             price=self.get_price(),
         )
 
-    def get_username(self) -> str:
+    def get_username(self) -> Optional[str]:
         return self.__username
 
-    def get_user_id(self) -> str:
+    def get_user_id(self) -> Optional[str]:
         return self.__user_id
 
     def to_csv(self) -> str:
@@ -76,7 +78,7 @@ class InventoryItem(Equipment):
             )
 
         try:
-            user_id = parts[1]
+            user_id = int(parts[1]) if parts[1] != "None" else None
         except IndexError:
             raise ValueError(
                 f"Failed to extract 'user_id' from CSV string. Parts: {parts}"
