@@ -24,17 +24,17 @@ if TYPE_CHECKING:
 class Request(Equipment):
     def __init__(
         self,
-        username: str,
-        user_id: int,
-        name: str,
-        serial_number: int,
-        purchase_date: Date,
-        price: int,
+        username: Optional[str] = None,
+        user_id: Optional[int] = None,
+        name: Optional[str] = None,
+        serial_number: Optional[int] = None,
+        purchase_date: Optional[Date] = None,
+        price: Optional[int] = None,
     ) -> Request:
         self.__action: Optional[Literal["agregar", "eliminar"]] = None
         self.__status: Optional[Literal["PENDING", "APPROVED", "REJECTED"]] = None
         self.__username = username
-        self.__user_id = int(user_id)
+        self.__user_id = user_id
         super().__init__(
             name=name,
             serial_number=serial_number,
@@ -187,10 +187,10 @@ class Request(Equipment):
             price=self.get_price(),
         )
 
-    def get_username(self) -> str:
+    def get_username(self) -> Optional[str]:
         return self.__username
 
-    def get_user_id(self) -> str:
+    def get_user_id(self) -> Optional[str]:
         return self.__user_id
 
     def to_csv(self) -> str:
@@ -213,7 +213,7 @@ class Request(Equipment):
             )
 
         try:
-            user_id = int(parts[1])
+            user_id = int(parts[1]) if parts[1] != "None" else None
         except ValueError:
             raise ValueError(
                 f"No se pudo convertir 'user_id' a un entero. Valor proporcionado: {parts[1]}"

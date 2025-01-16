@@ -35,8 +35,47 @@ class Administrator(Session):
         )
 
         saved_inventory = self.shared.saved_inventory
+        deleted_inventory = self.shared.deleted_inventory
+
+        saved_item_node = saved_inventory.find_if(
+            lambda saved_item: (
+                saved_item.get_equipment().get_serial_number() == item.get_serial_number()
+                and saved_item.get_user_id() == item.get_user_id()
+            )
+        )
+
+        if saved_item := saved_item_node is not None:
+            saved_item = saved_item_node.get_data()
+            console.print(f"[yellow]\nEl quipo con el número serial {item.get_serial_number()} ya se encuentra en el inventario[/]")
+            console.print(saved_item.to_csv())
+            return
+
+        deleted_item_node = deleted_inventory.find_if(
+            lambda deleted_item: (
+                deleted_item.get_equipment() == equipment
+                and deleted_item.get_user_id() == self.current.user.get_id()
+            )
+        )
+
+        if deleted_item_node is not None:
+            deleted_item = deleted_item_node.get_data()
+            deleted_inventory.erase(
+                deleted_inventory.find_if(
+                    lambda item: item == deleted_item
+                )
+            )
+
+            deleted_inventory.save_to_file()
+
+            console.print("[green]\nSe ha transferido el equipo del inventario eliminado al inventario general[/]")
+            console.print(deleted_item.to_csv())
+
+
         saved_inventory.push_back(item)
         saved_inventory.sorted(key=lambda item: item.get_serial_number()).save_to_file()
+
+        if deleted_item_node is None:
+            print("[green]\nSe ha guardado el equipo")
 
     def delete_equipment(self):
         current_saved_inventory = self.current.saved_inventory
@@ -48,14 +87,25 @@ class Administrator(Session):
         indexes = EquipmentList(
             current_saved_inventory.apply(lambda item: item.get_equipment())
         ).choose()
-        items = tuple(current_saved_inventory[index] for index in indexes)
+        selected_items = tuple(current_saved_inventory[index] for index in indexes)
 
-        shared_saved_inventory.filter_if(lambda item: item not in items).save_to_file()
+        for selected_item in selected_items:
+            shared_saved_inventory.erase(
+                shared_saved_inventory.find_if(
+                    lambda saved_item: saved_item == selected_item
+                )
+            )
 
-        shared_deleted_inventory.extend(items)
+        shared_saved_inventory.save_to_file()
+
+        shared_deleted_inventory.extend(selected_items)
         shared_deleted_inventory.sorted(
             key=lambda item: item.get_serial_number()
         ).save_to_file()
+
+        print("[red]\nSe ha eliminado el equipo[/]")
+        for item in selected_items:
+            print(item.get_equipment())
 
     def add_user(self):
         print()

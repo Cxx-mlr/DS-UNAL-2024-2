@@ -24,14 +24,14 @@ from config import (
 class ChangelogEntry:
     def __init__(
         self,
-        user_id: int,
-        serial_number: int,
-        action: Literal["agregar", "eliminar"],
-        date_time: DateTime,
-        status: Literal["PENDING", "APPROVED", "REJECTED"] = "PENDING",
+        user_id: Optional[int] = None,
+        serial_number: Optional[int] = None,
+        action: Optional[Literal["agregar", "eliminar"]] = None,
+        date_time: Optional[DateTime] = None,
+        status: Optional[Literal["PENDING", "APPROVED", "REJECTED"]] = None,
     ) -> ChangelogEntry:
-        self.__status: Optional[Literal["agregar", "eliminar"]] = None
-        self.__user_id = int(user_id)
+        self.__status = status
+        self.__user_id = user_id
         self.__serial_number = serial_number
         self.__action = action
         self.__date_time = date_time
@@ -64,6 +64,8 @@ class ChangelogEntry:
             return node.get_data()
 
     def get_equipment(self) -> Equipment:
+        from Equipment import Equipment
+
         with (
             Inventory(filename=SAVED_INVENTORY_PATH) as saved_inventory,
             Inventory(filename=DELETED_INVENTORY_PATH) as deleted_inventory,
@@ -96,25 +98,25 @@ class ChangelogEntry:
 
             return node.get_data().get_equipment()
 
-    def get_user_id(self) -> int:
+    def get_user_id(self) -> Optional[int]:
         return self.__user_id
 
-    def get_serial_number(self) -> int:
+    def get_serial_number(self) -> Optional[int]:
         return self.__serial_number
 
-    def get_action(self) -> Literal["agregar", "eliminar"]:
+    def get_action(self) -> Optional[Literal["agregar", "eliminar"]]:
         return self.__action
 
     def set_action(self, action: Literal["agregar", "eliminar"]):
         self.__action = action
 
-    def get_date_time(self) -> DateTime:
+    def get_date_time(self) -> Optional[DateTime]:
         return self.__date_time
 
     def set_date_time(self, date_time: DateTime):
         self.__date_time = date_time
 
-    def get_status(self) -> Literal["PENDING", "APPROVED", "REJECTED"]:
+    def get_status(self) -> Optional[Literal["PENDING", "APPROVED", "REJECTED"]]:
         return self.__status
 
     def set_status(self, status: Literal["PENDING", "APPROVED", "REJECTED"]):
@@ -132,21 +134,21 @@ class ChangelogEntry:
             )
 
         try:
-            user_id = int(parts[0])
+            user_id = int(parts[0]) if parts[0] != "None" else None
         except ValueError:
             raise ValueError(
                 f"No se pudo convertir 'user_id' a un entero. Valor proporcionado: {parts[0]}"
             )
 
         try:
-            serial_number = int(parts[1])
+            serial_number = int(parts[1]) if parts[1] != "None" else None
         except ValueError:
             raise ValueError(
                 f"No se pudo convertir 'serial_number' a un entero. Valor proporcionado: {parts[1]}"
             )
 
-        action = parts[2].lower()
-        if action not in ["agregar", "eliminar"]:
+        action = parts[2].lower() if parts[2] != "None" else None
+        if action is not None and action not in ("agregar", "eliminar"):
             raise ValueError(
                 f"El valor de 'action' debe ser 'agregar' o 'eliminar'. Valor proporcionado: {action}"
             )

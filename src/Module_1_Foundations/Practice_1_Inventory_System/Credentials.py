@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from rich import print
 
-from typing_extensions import Literal
+from typing_extensions import Literal, Optional
 
 from utils import console, ask_integer
 from config import EMPLOYEES_PATH
@@ -14,11 +14,11 @@ from Role import Role
 class Credentials:
     def __init__(
         self,
-        user_id: int,
-        password: str,
-        role: str = Literal["investigador", "administrador"],
+        user_id: Optional[int] = None,
+        password: Optional[str] = None,
+        role: Optional[Literal["investigador", "administrador"]] = None,
     ):
-        assert role in (
+        assert role is None or role in (
             "investigador",
             "administrador",
         ), "Role must be either 'investigador' or 'administrador'"
@@ -49,14 +49,17 @@ class Credentials:
 
             return node.get_data()
 
-    def get_user_id(self) -> int:
+    def get_user_id(self) -> Optional[int]:
         return self.__user_id
 
-    def get_password(self) -> str:
+    def get_password(self) -> Optional[str]:
         return self.__password
 
-    def get_role(self) -> Literal["investigador", "administrador"]:
+    def get_role(self) -> Optional[Literal["investigador", "administrador"]]:
         return self.__role
+
+    def set_role(self, role: Literal["investigador", "administrador"]):
+        self.__role = role
 
     def set_password(self, password: str):
         self.__password = password
@@ -80,7 +83,7 @@ class Credentials:
             )
 
         try:
-            user_id = int(parts[0])
+            user_id = int(parts[0]) if parts[0] != "None" else None
         except ValueError:
             raise ValueError(
                 f"No se pudo convertir 'user_id' a un entero. Valor proporcionado: {parts[0]}"
@@ -104,7 +107,7 @@ class Credentials:
                 f"No se pudo extraer 'role' de la cadena CSV. Partes: {parts}"
             )
 
-        if role not in ("investigador", "administrador"):
+        if role is not None and role not in ("investigador", "administrador"):
             raise ValueError(
                 f"Rol inválido '{role}' en la cadena CSV: {csv_string}. El rol debe ser 'investigador' o 'administrador'."
             )

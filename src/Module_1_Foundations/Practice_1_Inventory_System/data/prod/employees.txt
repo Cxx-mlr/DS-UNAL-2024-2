@@ -1,0 +1,5 @@
+Fernando-Mendoza 45678923 25 03 1983 Bogota 3007894561 fernandomendoza@edl.edu.co av68 9-32 Centro Bogota EdificioCentral 204
+Ana-Castro 78904561 10 07 1992 Bucaramanga 3014561234 anacastro@edl.edu.co cll12 7-15 Norte Bucaramanga ParqueReal 305
+Carlos-Rodriguez 67890234 05 05 1988 Cartagena 3027890123 carlosrodriguez@edl.edu.co kr14 6-20 Bocagrande Cartagena TorreMarina 1205
+Mariana-Lopez 56789012 18 08 1995 Barranquilla 3041234567 marianalopez@edl.edu.co cll34 8-54 Sur Barranquilla Miramar 807
+Andres-Valencia 34567891 02 04 1980 Pereira 3056789123 andresvalencia@edl.edu.co av23 10-45 Centro Pereira LosAlamos 602

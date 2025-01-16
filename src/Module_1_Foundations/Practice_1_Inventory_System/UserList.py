@@ -10,7 +10,7 @@ class UserList(FileBackedList[User]):
     def choose(self) -> List[int]:
         return super().choose(
             rule="Seleccione uno o varios usuarios",
-            input_message="Ingrese uno o varios números separados por espacio: ",
-            fail_message="Entrada no válida. Asegúrese de ingresar números válidos correspondientes a las opciones.",
+            prompt="Ingrese uno o varios números separados por espacio: ",
+            error_message="Entrada no válida. Asegúrese de ingresar números válidos correspondientes a las opciones.",
             lambda_repr=lambda item: item.to_csv(),
         )
