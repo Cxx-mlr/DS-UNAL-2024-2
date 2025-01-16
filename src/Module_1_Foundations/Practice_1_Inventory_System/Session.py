@@ -188,12 +188,12 @@ class Session:
             return self.saved_inventory + self.deleted_inventory
 
         @property
-        def saved_equipment(self) -> Equipment:
-            return self.saved_inventory.apply(lambda item: item.get_equipment())
+        def saved_equipment(self) -> EquipmentList:
+            return EquipmentList(self.saved_inventory.apply(lambda item: item.get_equipment()))
 
         @property
-        def deleted_equipment(self) -> Equipment:
-            return self.deleted_inventory.apply(lambda item: item.get_equipment())
+        def deleted_equipment(self) -> EquipmentList:
+            return EquipmentList(self.deleted_inventory.apply(lambda item: item.get_equipment()))
 
         @property
         def approved_changelog(self) -> Changelog:
