@@ -1,0 +1,33 @@
+Address: {
+  shape: class
+
+  -street\: Optional\[str\]
+  -nomenclature\: Optional\[str\]
+  -neighborhood\: Optional\[str\]
+  -city\: Optional\[str\]
+  -building\: Optional\[str\]
+  -apartment\: Optional\[str\]
+
+  +__init__(street\: Optional\[str\], nomenclature\: Optional\[str\], neighborhood\: Optional\[str\], city\: Optional\[str\], building\: Optional\[str\], apartment\: Optional\[str\]): Address
+  +ask(): Address
+
+  +from_csv(csv_string\: str): Address
+  +to_csv(): str
+
+  +get_street(): str
+  +get_nomenclature(): str
+  +get_neighborhood(): str
+  +get_city(): str
+  +get_building(): str
+  +get_apartment(): str
+
+  +set_street(street\: str): None
+  +set_nomenclature(nomenclature\: str): None
+  +set_neighborhood(neighborhood\: str): None
+  +set_city(city\: str): None
+  +set_building(building\: str): None
+  +set_apartment(apartment\: str): None
+
+  __repr__(): str
+  __str__(): None
+}

@@ -1,0 +1,28 @@
+FileBackedList\[T\]: {
+  shape: class
+
+  -session: Optional\[Session\]
+  -filename: Optional\[str\]
+
+  +__init__(arg\: Optional\[Union\[Iterable\[T\], DoubleList\[T\], FileBackedList\[T\]\]\], \*\*kwargs): None
+  +clone(): Self\[T\]
+  +loose_clone(): Self\[T\]
+
+  +load_from_file(filename\: Optional\[str\]): None
+  +save_to_file(filename\: Optional\[str\]): None
+
+  +get_session(): Optional\[Session\]
+  +get_filename(): Optional\[str\]
+
+  +set_session(session\: Session): None
+  +set_filename(filename\: str): None
+
+  +choose(rule\: str, prompt\: str, error_message\: str, lambda_repr\: Optional\[Callable\[\[T\], bool\]\]): Set\[int\]
+
+  +filter(data\: T): Self\[T\]
+  +filter_if(pred\: Callable\[\[T\], bool\]): Self\[T\]
+
+  +__enter__(): Self\[T\]
+  +__exit__(type, value, traceback): bool
+  +__str__(): str
+}

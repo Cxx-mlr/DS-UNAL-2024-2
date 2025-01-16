@@ -1,0 +1,25 @@
+InventoryItem: {
+  shape: class
+
+  -username: str
+  -user_id: int
+  -name: str
+  -serial_number: int
+  -purchase_date: Date
+  -price: int
+
+  +__init__(username\: str, user_id\: int, name\: str, serial_number\: int, purchase_date\: Date, price\: int): InventoryItem
+
+  +from_csv(csv_string\: str): str
+  +to_csv(): str
+
+  +get_username(): str
+  +get_user_id(): str
+  +get_equipment(): Equipment
+
+  +get_user(): User
+
+  __eq__(other\: object): bool
+  __ne__(other\: object)
+  __str__()
+}

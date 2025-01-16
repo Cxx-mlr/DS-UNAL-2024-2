@@ -1,0 +1,24 @@
+DoubleNode\[T\]: {
+  shape: class
+
+  -prev: Optional\[DoubleNode\[T\]\]
+  -next: Optional\[DoubleNode\[T\]\]
+  -data: T
+
+  +__init__(data\: T): DoubleNode\[T\]
+
+  +get_prev(): Optional\[DoubleNode\[T\]\]
+  +get_next(): Optional\[DoubleNode\[T\]\]
+  +get_data(): T
+
+  +set_prev(prev\: Optional\[DoubleNode\[T\]\]): None
+  +set_next(next\: Optional\[DoubleNode\[T\]\]): None
+  +set_data(data\: T): None
+
+  +__eq__(other\: object): bool
+  +__ne__(other\: object): bool
+  +__add__(index\: int): DoubleNode\[T\]
+  +__sub__(index\: int): DoubleNode\[T\]
+  +__iter__(): Iterator\[DoubleNode\[T\]\]
+  +__repr__(): str
+}
