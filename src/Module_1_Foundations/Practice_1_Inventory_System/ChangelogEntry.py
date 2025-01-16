@@ -134,21 +134,21 @@ class ChangelogEntry:
             )
 
         try:
-            user_id = int(parts[0])
+            user_id = int(parts[0]) if parts[0] != "None" else None
         except ValueError:
             raise ValueError(
                 f"No se pudo convertir 'user_id' a un entero. Valor proporcionado: {parts[0]}"
             )
 
         try:
-            serial_number = int(parts[1])
+            serial_number = int(parts[1]) if parts[1] != "None" else None
         except ValueError:
             raise ValueError(
                 f"No se pudo convertir 'serial_number' a un entero. Valor proporcionado: {parts[1]}"
             )
 
-        action = parts[2].lower()
-        if action not in ["agregar", "eliminar"]:
+        action = parts[2].lower() if parts[2] != "None" else None
+        if action is not None and action not in ("agregar", "eliminar"):
             raise ValueError(
                 f"El valor de 'action' debe ser 'agregar' o 'eliminar'. Valor proporcionado: {action}"
             )
