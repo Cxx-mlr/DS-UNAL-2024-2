@@ -96,25 +96,25 @@ class ChangelogEntry:
 
             return node.get_data().get_equipment()
 
-    def get_user_id(self) -> int:
+    def get_user_id(self) -> Optional[int]:
         return self.__user_id
 
-    def get_serial_number(self) -> int:
+    def get_serial_number(self) -> Optional[int]:
         return self.__serial_number
 
-    def get_action(self) -> Literal["agregar", "eliminar"]:
+    def get_action(self) -> Optional[Literal["agregar", "eliminar"]]:
         return self.__action
 
     def set_action(self, action: Literal["agregar", "eliminar"]):
         self.__action = action
 
-    def get_date_time(self) -> DateTime:
+    def get_date_time(self) -> Optional[DateTime]:
         return self.__date_time
 
     def set_date_time(self, date_time: DateTime):
         self.__date_time = date_time
 
-    def get_status(self) -> Literal["PENDING", "APPROVED", "REJECTED"]:
+    def get_status(self) -> Optional[Literal["PENDING", "APPROVED", "REJECTED"]]:
         return self.__status
 
     def set_status(self, status: Literal["PENDING", "APPROVED", "REJECTED"]):

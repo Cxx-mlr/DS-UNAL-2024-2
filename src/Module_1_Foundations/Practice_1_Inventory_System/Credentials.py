@@ -52,10 +52,10 @@ class Credentials:
     def get_user_id(self) -> int:
         return self.__user_id
 
-    def get_password(self) -> str:
+    def get_password(self) -> Optional[str]:
         return self.__password
 
-    def get_role(self) -> Literal["investigador", "administrador"]:
+    def get_role(self) -> Optional[Literal["investigador", "administrador"]]:
         return self.__role
 
     def set_password(self, password: str):

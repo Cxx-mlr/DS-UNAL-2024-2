@@ -187,10 +187,10 @@ class Request(Equipment):
             price=self.get_price(),
         )
 
-    def get_username(self) -> str:
+    def get_username(self) -> Optional[str]:
         return self.__username
 
-    def get_user_id(self) -> str:
+    def get_user_id(self) -> Optional[str]:
         return self.__user_id
 
     def to_csv(self) -> str:
