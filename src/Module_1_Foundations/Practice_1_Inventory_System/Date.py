@@ -27,7 +27,7 @@ class Date:
                 parts = user_input.split("-")
                 if len(parts) != 3:
                     raise ValueError(
-                        f"Input must contain exactly three parts separated by '-', but got {len(parts)} part(s): {parts}"
+                        f"La entrada debe contener exactamente tres partes separadas por '-', pero se obtuvieron {len(parts)} parte(s): {parts}"
                     )
 
                 day_str, month_str, year_str = parts
@@ -35,28 +35,28 @@ class Date:
                 try:
                     day = int(day_str)
                 except ValueError:
-                    raise ValueError(f"Day value '{day_str}' is not a valid integer.")
+                    raise ValueError(f"El valor del día '{day_str}' no es un entero válido.")
 
                 try:
                     month = int(month_str)
                 except ValueError:
                     raise ValueError(
-                        f"Month value '{month_str}' is not a valid integer."
+                        f"El valor del mes '{month_str}' no es un entero válido."
                     )
 
                 try:
                     year = int(year_str)
                 except ValueError:
-                    raise ValueError(f"Year value '{year_str}' is not a valid integer.")
+                    raise ValueError(f"El valor del año '{year_str}' no es un entero válido.")
 
                 if not (1 <= day <= 31):
-                    raise ValueError(f"Day must be between 1 and 31, but got {day}.")
+                    raise ValueError(f"El día debe estar entre 1 y 31, pero se obtuvo {day}.")
                 if not (1 <= month <= 12):
                     raise ValueError(
-                        f"Month must be between 1 and 12, but got {month}."
+                        f"El mes debe estar entre 1 y 12, pero se obtuvo {month}."
                     )
                 if year <= 1900:
-                    raise ValueError(f"Year must be greater than 1900, but got {year}.")
+                    raise ValueError(f"El año debe ser mayor que 1900, pero se obtuvo {year}.")
 
             except ValueError as ve:
                 print()
