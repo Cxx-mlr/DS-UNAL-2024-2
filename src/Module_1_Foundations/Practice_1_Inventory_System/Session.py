@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing_extensions import Literal
+from typing_extensions import Literal, Optional
+from pathlib import Path
 
 from User import User
 from Credentials import Credentials
@@ -24,10 +25,12 @@ from config import (
 
 
 class Session:
-    def __init__(self, user: User):
+    def __init__(self, user: Optional[User] = None):
         self.__user = user
         self.shared = self.Shared(self)
-        self.current = self.Current(session=self, shared=self.shared)
+        self.current = (
+            self.Current(session=self, shared=self.shared) if user is not None else None
+        )
 
     class Shared:
         def __init__(self, session: Session):
@@ -35,11 +38,8 @@ class Session:
 
         @property
         def users(self) -> UserList:
-            return UserList(
-                self.credentials_list.apply(lambda credentials: credentials.get_user()),
-                filename=EMPLOYEES_PATH,
-                session=self.credentials_list.get_session(),
-            )
+            with UserList(filename=EMPLOYEES_PATH, session=self.__session) as users:
+                return users
 
         @property
         def credentials_list(self) -> CredentialsList:
@@ -212,38 +212,53 @@ class Session:
 
     def _get_requests(
         self,
-        path: str,
+        path: Path,
         status: Literal["PENDING", "APPROVED", "REJECTED"],
         action: Literal["agregar", "eliminar"],
-        filter_by_user: bool = True,
+        filter_by_user: bool,
     ) -> RequestList:
-        with RequestList(filename=path) as request_list:
-            if filter_by_user:
-                request_list = request_list.filter_if(
-                    lambda request: request.get_user_id() == self.__user.get_id()
-                )
-            request_list.set_status(status)
-            request_list.set_action(action)
+        request_list = RequestList(filename=path)
+
+        if path.exists():
+           request_list.load_from_file() 
+
+        if filter_by_user:
+            request_list = request_list.filter_if(
+                lambda request: request.get_user_id() == self.__user.get_id()
+            )
+
+        request_list.set_status(status)
+        request_list.set_action(action)
         return request_list
 
-    def _get_inventory(self, path: str, filter_by_user: bool = True) -> Inventory:
-        with Inventory(filename=path) as inventory:
-            if filter_by_user:
-                return inventory.filter_if(
-                    lambda item: item.get_user_id() == self.__user.get_id()
-                )
+    def _get_inventory(self, path: Path, filter_by_user: bool) -> Inventory:
+        inventory = Inventory(filename=path)
+        
+        if path.exists():
+            inventory.load_from_file()
+
+        if filter_by_user:
+            inventory = inventory.filter_if(
+                lambda item: True
+            )
+
         return inventory
 
     def _get_changelog(
         self,
-        path: str,
+        path: Path,
         status: Literal["PENDING", "APPROVED", "REJECTED"],
-        filter_by_user: bool = True,
+        filter_by_user: bool,
     ) -> Changelog:
-        with Changelog(filename=path) as changelog:
-            if filter_by_user:
-                changelog = changelog.filter_if(
-                    lambda entry: entry.get_user_id() == self.__user.get_id()
-                )
-            changelog.set_status(status)
+        changelog = Changelog(filename=path)
+
+        if path.exists():
+            changelog.load_from_file()
+        
+        if filter_by_user:
+            changelog = changelog.filter_if(
+                lambda entry: entry.get_user_id() == self.__user.get_id()
+            )
+
+        changelog.set_status(status)
         return changelog
