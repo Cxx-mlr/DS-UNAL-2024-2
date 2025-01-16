@@ -116,22 +116,23 @@ class FileBackedList(DoubleList[T]):
 
     def load_from_file(self, filename: Optional[str] = None):
         filename = filename or self.get_filename()
-        try:
-            with open(DATA_PATH / filename, "rt", encoding="utf-8") as file:
-                for csv_string in file:
-                    items = self.__class__.T.from_csv(csv_string=csv_string)
-                    self.push_back(items)
-        except FileNotFoundError:
-            print(f"{filename}: File not found. Failed to load data.")
+        path = DATA_PATH / filename
+        if not path.exists():
+            return
+        
+        with open(DATA_PATH / filename, "rt", encoding="utf-8") as file:
+            for csv_string in file:
+                items = self.__class__.T.from_csv(csv_string=csv_string)
+                self.push_back(items)
 
     def save_to_file(self, filename: Optional[str] = None):
         filename = filename or self.get_filename()
+        path = DATA_PATH / filename
+        path.touch()
+        
         data = "\n".join(items.to_csv() for items in self)
-        try:
-            with open(DATA_PATH / filename, "wt", encoding="utf-8") as file:
-                file.writelines(data)
-        except FileNotFoundError:
-            print(f"{filename}: File not found. Failed to load data.")
+        with open(DATA_PATH / filename, "wt", encoding="utf-8") as file:
+            file.writelines(data)
 
     def __str__(self) -> str:
         return "\n".join(f"{items}" for items in self)
