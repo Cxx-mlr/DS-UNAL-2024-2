@@ -71,7 +71,10 @@ class Request(Equipment):
                 )
                 return
             saved_inventory.push_back(item)
-            deleted_inventory.erase(node)
+            deleted_inventory.erase_if(
+                lambda deleted_item: deleted_item.get_user_id() == item.get_user_id()
+                and deleted_item.get_serial_number() == item.get_serial_number()
+            )
 
             self.purge(session=session)
 
