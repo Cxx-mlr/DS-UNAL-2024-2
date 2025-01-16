@@ -92,16 +92,10 @@ class Researcher(Session):
         return self.output_requests_status(file=StringIO())
 
     def save_inventory(self):
-        with Inventory(filename="InventarioGeneral.txt") as inventory:
-            user_inventory = inventory.filter_if(
-                lambda item: item.get_user_id() == self.current.user.get_id()
-            )
-
-            EquipmentList(
-                user_inventory.apply(lambda item: item.get_equipment())
-            ).sorted(lambda equipment: equipment.get_serial_number()).save_to_file(
-                filename=f"{self.current.user.get_name()} {self.current.user.get_id()}.txt"
-            )
+        equipment = self.current.saved_equipment
+        equipment.sorted(lambda equipment: equipment.get_serial_number()).save_to_file(
+            filename=f"{self.current.user.get_name()} {self.current.user.get_id()}.txt"
+        )
 
     def display_menu(self):
         options = [
