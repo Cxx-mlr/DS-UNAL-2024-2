@@ -157,11 +157,11 @@ class Session:
 
         @property
         def approved_requests(self) -> RequestList:
-            return self.approved_changelog.apply(lambda entry: entry.get_request())
+            return RequestList(self.approved_changelog.apply(lambda entry: entry.get_request()))
 
         @property
         def rejected_requests(self) -> RequestList:
-            return self.rejected_changelog.apply(lambda entry: entry.get_request())
+            return RequestList(self.rejected_changelog.apply(lambda entry: entry.get_request()))
 
         @property
         def non_pending_requests(self) -> RequestList:
