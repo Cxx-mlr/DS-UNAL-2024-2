@@ -30,8 +30,8 @@ class ChangelogEntry:
         date_time: Optional[DateTime] = None,
         status: Optional[Literal["PENDING", "APPROVED", "REJECTED"]] = None,
     ) -> ChangelogEntry:
-        self.__status: Optional[Literal["agregar", "eliminar"]] = None
-        self.__user_id = int(user_id)
+        self.__status = status
+        self.__user_id = user_id
         self.__serial_number = serial_number
         self.__action = action
         self.__date_time = date_time
