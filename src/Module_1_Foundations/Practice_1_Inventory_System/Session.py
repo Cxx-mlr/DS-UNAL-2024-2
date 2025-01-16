@@ -11,6 +11,7 @@ from Inventory import Inventory
 from Changelog import Changelog
 from Equipment import Equipment
 from UserList import UserList
+from EquipmentList import EquipmentList
 
 from config import (
     ADD_REQUESTS_PATH,
