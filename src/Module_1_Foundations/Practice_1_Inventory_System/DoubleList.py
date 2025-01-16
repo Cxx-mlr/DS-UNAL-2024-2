@@ -105,8 +105,9 @@ class DoubleList(Generic[T]):
 
         result_list.push_back(front_result)
 
-        for node in self.begin() + 1:
-            result_list.push_back(func(node.get_data()))
+        if self.begin() + 1 is not None:
+            for node in self.begin() + 1:
+                result_list.push_back(func(node.get_data()))
 
         return result_list
 
