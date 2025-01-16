@@ -2,18 +2,26 @@ from __future__ import annotations
 
 import os
 from auth import login
+from Session import Session
+from utils import console
 
 
 def main():
-    # Investigador
-    user_id = 45678923
-    password = "lV1983Bogo$"
+    session = Session()
 
-    # Administrador
-    user_id = 78904561
-    password = "aC1992#Buca"
+    credentials_list = session.shared.credentials_list
 
-    session = login(user_id=user_id, password=password)
+    researcher_node = credentials_list.find_if(
+        lambda credentials: credentials.is_researcher()
+    )
+
+    if researcher_node is None:
+        console.print("Error: No se encontró ningún administrador en la lista de credenciales.")
+        return
+
+    researcher = researcher_node.get_data()
+
+    session = login(user_id=researcher.get_user_id(), password=researcher.get_password())
     while True:
         try:
             os.system("cls")
