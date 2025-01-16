@@ -34,7 +34,7 @@ class Request(Equipment):
         self.__action: Optional[Literal["agregar", "eliminar"]] = None
         self.__status: Optional[Literal["PENDING", "APPROVED", "REJECTED"]] = None
         self.__username = username
-        self.__user_id = int(user_id)
+        self.__user_id = user_id
         super().__init__(
             name=name,
             serial_number=serial_number,
@@ -213,7 +213,7 @@ class Request(Equipment):
             )
 
         try:
-            user_id = int(parts[1])
+            user_id = int(parts[1]) if parts[1] != "None" else None
         except ValueError:
             raise ValueError(
                 f"No se pudo convertir 'user_id' a un entero. Valor proporcionado: {parts[1]}"
