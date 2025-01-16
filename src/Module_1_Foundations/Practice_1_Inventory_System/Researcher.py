@@ -9,8 +9,6 @@ from config import REQUESTS_STATUS_FILENAME, DATA_PATH
 from utils import console, ask_in_range
 
 from Equipment import Equipment
-from EquipmentList import EquipmentList
-from Inventory import Inventory
 from Request import Request
 from Session import Session
 
