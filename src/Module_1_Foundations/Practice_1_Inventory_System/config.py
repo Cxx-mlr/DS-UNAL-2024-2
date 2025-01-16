@@ -1,7 +1,7 @@
 from pathlib import Path
 
 THIS_PATH = Path(__file__).parent
-DATA_PATH = THIS_PATH / "data"
+DATA_PATH = THIS_PATH / "data" / "prod"
 
 DELETE_REQUESTS_PATH = DATA_PATH / "delete_requests.txt"
 ADD_REQUESTS_PATH = DATA_PATH / "add_requests.txt"
