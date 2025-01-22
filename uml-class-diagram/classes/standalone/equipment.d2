@@ -1,0 +1,28 @@
+Equipment: {
+  shape: class
+
+  -name: Optional\[str\]
+  -serial_number: Optional\[int\]
+  -purchase_date: Optional\[Date\]
+  -price: Optional\[int\]
+
+  +__init__(name\: Optional\[str\], serial_number\: Optional\[int\], purchase_date\: Optional\[Date\], price\: Optional\[int\]): Equipment
+  +ask(): Equipment
+
+  +from_csv(csv_string\: str): Equipment
+  +to_csv(): str
+
+  +get_name() -> Optional\[str\]
+  +get_serial_number() -> Optional\[int\]
+  +get_purchase_date() -> Optional\[Date\]
+  +get_price() -> Optional\[int\]
+
+  +set_name(name\: str): None
+  +set_serial_number(serial_number\: str): None
+  +set_purchase_date(purchase_date\: Date): None
+  +set_price(price\: int): None
+
+  +__eq__(other\: object): bool
+  +__ne__(other\: object): bool
+  +__str__(): str
+}

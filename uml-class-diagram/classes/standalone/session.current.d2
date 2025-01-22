@@ -1,0 +1,26 @@
+Session\.Current: {
+  shape: class
+
+  -session: Session
+  -shared: Session\.Shared
+
+  +__init__(session\: Session, shared\: Session\.Shared): Session\.Current
+
+  +user(): User
+  +credentials(): Credentials
+  +add_requests(): RequestList
+  +delete_requests(): RequestList
+  +pending_requests(): RequestList
+  +approved_requests(): RequestList
+  +rejected_requests(): RequestList
+  +non_pending_requests(): RequestList
+  +requests(): RequestList
+  +saved_inventory(): Inventory
+  +deleted_inventory(): Inventory
+  +inventory(): Inventory
+  +saved_equipment(): Equipment
+  +deleted_equipment(): Equipment
+  +approved_changelog(): Changelog
+  +rejected_changelog(): Changelog
+  +changelog(): Changelog
+}

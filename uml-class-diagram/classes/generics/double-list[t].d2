@@ -1,0 +1,60 @@
+DoubleList\[T\]: {
+  shape: class
+
+  -head: Optional\[DoubleNode\[T\]\]
+  -tail: Optional\[DoubleNode\[T\]\]
+  -size: int
+
+  +__init__(arg\: Optional\[Union\[Iterable\[T\], DoubleList\[T\]\]\])
+  +clone(): DoubleList\[T\]
+  +loose_clone(): DoubleList\[T\]
+
+  +begin(): DoubleNode\[T\]
+  +end(): DoubleNode\[T\]
+
+  +clear(): None
+
+  +size(): int
+  +empty(): bool
+
+  +front(): T
+  +back(): T
+  +node_at(index\: int): DoubleNode\[T\]
+
+  +push_front(data\: T): None
+  +push_back(data\: T): None
+  +extend(iterable\: Iterable\[T\]): None
+
+  +pop_front(): T
+  +pop_back(): T
+
+  +remove(data\: T, count\: int = 1): None
+  +remove_if(pred\: Callable\[\[T\], bool\], count\: int = 1): None
+  +erase(\*args\: Optional\[DoubleList\[T\]\]): None
+  +erase_if(pred\: Callable\[\[T\], bool\]): None
+  +filter(data\: T): Self\[T\]
+  +filter_if(pred\: Callable\[\[T\], bool\]): DoubleList\[T\]
+  +apply(func\: Callable\[\[T\], R\]): DoubleList\[R\]
+  +for_each(func\: Callable\[\[T\], void\])
+
+  +sort(key\: Optional\[Callable\[\[T\], Any\]\]): None
+  +reverse(): None
+
+  +find(data\: Optional\[T\]): Optional\[DoubleNode\[T\]\]
+  +find_if(pred\: Callable\[\[T\], bool\]): Optional\[DoubleNode\[T\]\]
+  +index(data\: Optional\[T\]): int
+  +index_if(pred\: Callable\[\[T\], bool\]): int
+  +insert(index\: int, data\: Union\[T, Iterable\[T\], DoubleList\[T\]\]): None
+  +add_after(node\: DoubleNode\[T\], data\: T)
+  +add_before(node\: DoubleNode\[T\], data\: T)
+  +sorted(key\: Optional\[Callable\[\[T\], Any\]\]): Self\[T\]
+  +reversed(): Self\[T\]
+
+  +nodes(): Generator\[DoubleNode\[T\], None, None\]
+
+  +__add__(iterable\: \[\]T): Self\[T\]
+  +__sub__(iterable\: \[\]T): Self\[T\]
+  +__iter__(): T
+  +__getitem__(index\: int): T
+  +__repr__(): str
+}
