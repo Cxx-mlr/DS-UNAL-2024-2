@@ -1,0 +1,13 @@
+Session: {
+  shape: class
+
+  -user: User
+  +shared: Session\.Shared
+  +current: Session\.Current
+
+  +__init__(user\: User): Session
+
+  \#get_requests(path\: str, status\: Literal\["PENDING", "APPROVED", "REJECTED"\], action\: Literal\["agregar", "eliminar"\], filter_by_user\: bool): RequestList
+  \#get_inventory(path\: str, filter_by_user\: bool): Inventory
+  \#get_changelog(path\: str, status\: Literal\["PENDING", "APPROVED", "REJECTED"\], filter_by_user\: bool): Changelog
+}

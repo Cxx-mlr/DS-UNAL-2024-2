@@ -1,0 +1,29 @@
+ChangelogEntry: {
+  shape: class
+
+  -user_id: int
+  -serial_number: int
+  -action: Literal\["agregar", "eliminar"\]
+  -date_time: DateTime
+  -status: Literal\["PENDING", "APPROVED", "REJECTED"\] = "PENDING"
+
+  +__init__(user_id\: int, serial_number\: int, action\: Literal\["agregar", "eliminar"\], date_time\: DateTime, status\: Literal\["PENDING", "APPROVED", "REJECTED"\] = "PENDING"): ChangelogEntry
+
+  +from_csv(csv_string\: str): ChangelogEntry
+  +to_csv(): str
+
+  +get_request(): Request
+  +get_user(): User
+  +get_equipment(): Equipment
+  +get_user_id(): int
+  +get_serial_number(): int
+  +get_action(): Literal\["agregar", "eliminar"\]
+  +set_action(action\: Literal\["agregar", "eliminar"\]): None
+  +get_date_time(): DateTime
+  +get_status(): Literal\["PENDING", "APPROVED", "REJECTED"\]
+
+  +set_date_time(date_time\: DateTime): None
+  +set_status(status\: Literal\["PENDING", "APPROVED", "REJECTED"\]): None
+
+  +__str__(): str
+}

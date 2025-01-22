@@ -1,0 +1,36 @@
+User: {
+  shape: class
+
+  -name: Optional\[str\]
+  -id: Optional\[int\]
+  -birth_date: Optional\[Date\]
+  -birth_city: Optional\[str\]
+  -phone_number: Optional\[int\]
+  -email: Optional\[str\]
+  -address: Optional\[Address\]
+
+  +__init__(name\: Optional\[str\] id\: Optional\[int\], birth_date\: Optional\[Date\], birth_city\: Optional\[str\], phone_number\: Optional\[int\], email\: Optional\[str\], address\: Optional\[Address\]): User
+  +ask(): User
+
+  +from_csv(csv_string\: str): User
+  +to_csv(): str
+
+  +get_name(): Optional\[str\]
+  +get_id(): Optional\[int\]
+  +get_birth_date(): Optional\[Date\]
+  +get_birth_city(): Optional\[str\]
+  +get_phone_number(): Optional\[int\]
+  +get_email(): Optional\[str\]
+  +get_address(): Optional\[Address\]
+
+  +set_name(name\: str)
+  +set_id(id\: str)
+  +set_birth_date(birth_date\: str)
+  +set_birth_city(birth_city\: str)
+  +set_phone_number(phone_number\: str)
+  +set_email(email\: str)
+  +set_address(address\: str)
+
+  +__repr__(): str
+  +__str__(): str
+}

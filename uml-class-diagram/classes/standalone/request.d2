@@ -1,0 +1,35 @@
+Request: {
+  shape: class
+
+  -username: str
+  -user_id: int
+  -name: str
+  -serial_number: int
+  -purchase_date: Date
+  -price: int
+
+  +__init__(username\: str, user_id\: int, name\: str, serial_number\: int, purchase_date\: Date, price\: int): Request
+  +from_csv(csv_string\: str): Request
+  +to_csv(): str
+
+  +get_username(): str
+  +get_user_id(): str
+  +get_item(): InventoryItem
+  +get_equipment(): Equipment
+  +get_changelog_entry(status\: Literal\["PENDING", "APPROVED", "REJECTED"\] = "PENDING"): None
+  +get_action(): Optional\[Literal\["agregar", "eliminar"\]\]
+  +get_status(): Optional\[Literal\["PENDING", "APPROVED", "REJECTED"\]\]
+  +get_user(): User
+
+  +set_action(action\: Literal\["agregar", "eliminar"\])
+  +set_status(status\: Optional\[Literal\["PENDING", "APPROVED", "REJECTED"\]\])
+
+  +purge(session\: Session): None
+  +approve(session\: Session): None
+  +reject(session\: Session): None
+  +submit(): None
+
+  +__eq__(other\: object): bool
+  +__ne__(other\: object): bool
+  +__str__(): str
+}

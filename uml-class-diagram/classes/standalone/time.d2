@@ -1,0 +1,28 @@
+Time: {
+  shape: class
+
+  -hour\: Optional\[int\]
+  -minute\: Optional\[int\]
+  -second\: Optional\[int\]
+
+  +__init__(hour\: Optional\[int\], minute\: Optional\[int\], second\: Optional\[int\]): Time
+  +ask(prompt\: str, error_message\: str): Time
+
+  +from_csv(csv_string\: str): Time
+  +to_csv(): str
+
+  +get_hour(): Optional\[int\]
+  +get_minute(): Optional\[int\]
+  +get_second(): Optional\[int\]
+
+  +set_hour(hour\: int): None
+  +set_minute(minute\: int): None
+  +set_second(second\: int): None
+
+  +now(): Time
+
+  +__eq__(other\: object): bool
+  +__ne__(other\: object): bool
+  +__repr__(): str
+  +__str__(): str
+}
