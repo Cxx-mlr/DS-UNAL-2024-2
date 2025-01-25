@@ -17,7 +17,7 @@ class Credentials:
         user_id: Optional[int] = None,
         password: Optional[str] = None,
         role: Optional[Literal["investigador", "administrador"]] = None,
-    ):
+    ) -> None:
         assert role is None or role in (
             "investigador",
             "administrador",

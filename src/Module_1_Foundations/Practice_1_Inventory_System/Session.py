@@ -26,7 +26,7 @@ from config import (
 
 
 class Session:
-    def __init__(self, user: Optional[User] = None):
+    def __init__(self, user: Optional[User] = None) -> None:
         self.__user = user
         self.shared = self.Shared(self)
         self.current = (

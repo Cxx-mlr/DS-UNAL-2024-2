@@ -30,7 +30,7 @@ class Request(Equipment):
         serial_number: Optional[int] = None,
         purchase_date: Optional[Date] = None,
         price: Optional[int] = None,
-    ) -> Request:
+    ) -> None:
         self.__action: Optional[Literal["agregar", "eliminar"]] = None
         self.__status: Optional[Literal["PENDING", "APPROVED", "REJECTED"]] = None
         self.__username = username

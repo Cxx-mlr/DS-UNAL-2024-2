@@ -11,7 +11,7 @@ class Date:
         year: Optional[int] = None,
         month: Optional[int] = None,
         day: Optional[int] = None,
-    ) -> Date:
+    ) -> None:
         self.__year = year
         self.__month = month
         self.__day = day

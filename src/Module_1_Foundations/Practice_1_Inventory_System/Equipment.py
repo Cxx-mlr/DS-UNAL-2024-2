@@ -13,7 +13,7 @@ class Equipment:
         serial_number: Optional[int] = None,
         purchase_date: Optional[Date] = None,
         price: Optional[int] = None,
-    ) -> Equipment:
+    ) -> None:
         self.__name = name
         self.__serial_number = serial_number
         self.__purchase_date = purchase_date

@@ -18,7 +18,7 @@ class InventoryItem(Equipment):
         serial_number: Optional[int] = None,
         purchase_date: Optional[Date] = None,
         price: Optional[int] = None,
-    ) -> InventoryItem:
+    ) -> None:
         self.__username = username
         self.__user_id = user_id
         super().__init__(
