@@ -18,7 +18,7 @@ class User:
         phone_number: Optional[int] = None,
         email: Optional[str] = None,
         address: Optional[Address] = None,
-    ) -> User:
+    ) -> None:
         self.__name = name
         self.__id = id
         self.__birth_date = birth_date

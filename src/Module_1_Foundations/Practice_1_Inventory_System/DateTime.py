@@ -15,7 +15,7 @@ class DateTime(Date, Time):
         hour: Optional[int] = None,
         minute: Optional[int] = None,
         second: Optional[int] = None,
-    ) -> DateTime:
+    ) -> None:
         Date.__init__(self, year, month, day)
         Time.__init__(self, hour, minute, second)
 

@@ -47,7 +47,7 @@ class FileBackedList(DoubleList[T]):
     @overload
     def __init__(self, iterable: FileBackedList[T], /) -> None: ...
 
-    def __init__(self, arg=None, **kwargs):
+    def __init__(self, arg=None, **kwargs) -> None:
         if isinstance(arg, FileBackedList):
             self.__session = arg.get_session()
             self.__filename = arg.get_filename()

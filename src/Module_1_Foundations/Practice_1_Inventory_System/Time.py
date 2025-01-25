@@ -10,7 +10,7 @@ class Time:
         hour: Optional[int] = None,
         minute: Optional[int] = None,
         second: Optional[int] = None,
-    ) -> Time:
+    ) -> None:
         self.__hour = hour
         self.__minute = minute
         self.__second = second

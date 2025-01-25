@@ -13,7 +13,7 @@ class Address:
         city: Optional[str] = None,
         building: Optional[str] = None,
         apartment: Optional[str] = None,
-    ) -> Address:
+    ) -> None:
         self.__street = street
         self.__nomenclature = nomenclature
         self.__neighborhood = neighborhood

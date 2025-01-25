@@ -29,7 +29,7 @@ class ChangelogEntry:
         action: Optional[Literal["agregar", "eliminar"]] = None,
         date_time: Optional[DateTime] = None,
         status: Optional[Literal["PENDING", "APPROVED", "REJECTED"]] = None,
-    ) -> ChangelogEntry:
+    ) -> None:
         self.__status = status
         self.__user_id = user_id
         self.__serial_number = serial_number
