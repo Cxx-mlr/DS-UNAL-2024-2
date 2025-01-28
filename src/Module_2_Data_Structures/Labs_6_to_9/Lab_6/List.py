@@ -313,7 +313,7 @@ class List(Generic[T]):
     def add_after(self, node: Node[T], data: T):
         if not self.has(node):
             raise ValueError("The specified node is not in the list")
-        
+
         if node is self.__tail:
             self.push_back(data)
         else:
@@ -360,12 +360,12 @@ class List(Generic[T]):
         if len(args) == 1:
             __node = args[0]
             print(f"__node: {__node}")
-            
+
             if __node is None:
                 return
             if not isinstance(__node, Node):
                 raise ValueError("The specified argument is not an instance of Node")
-            
+
             if __node is self.__head:
                 self.pop_front()
             elif __node is self.__tail:
@@ -417,6 +417,7 @@ class List(Generic[T]):
 
     def sort(self, key: Optional[Callable[[T], Any]] = None):
         if key is None:
+
             def key(arg):
                 return arg
 
@@ -427,12 +428,16 @@ class List(Generic[T]):
             while current is not None:
                 next_node = current.get_next()
 
-                if sorted_head is None or key(sorted_head.get_data()) >= key(current.get_data()):
+                if sorted_head is None or key(sorted_head.get_data()) >= key(
+                    current.get_data()
+                ):
                     current.set_next(sorted_head)
                     sorted_head = current
                 else:
                     sorted_current = sorted_head
-                    while sorted_current.get_next() is not None and key(sorted_current.get_next().get_data()) < key(current.get_data()):
+                    while sorted_current.get_next() is not None and key(
+                        sorted_current.get_next().get_data()
+                    ) < key(current.get_data()):
                         sorted_current = sorted_current.get_next()
 
                     current.set_next(sorted_current.get_next())
