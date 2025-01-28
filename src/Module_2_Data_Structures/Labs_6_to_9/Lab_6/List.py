@@ -27,10 +27,7 @@ class List(Generic[T]):
     @overload
     def __init__(self, __iterable: Iterable[T]) -> None: ...
 
-    @overload
-    def __init__(self, __list: List[T]) -> None: ...
-
-    def __init__(self, arg: Optional[Union[Iterable[T], List[T]]] = None) -> None:
+    def __init__(self, arg: Optional[Iterable[T]] = None) -> None:
         self.__head: Optional[Node[T]] = None
         self.__tail: Optional[Node[T]] = None
         self.__size: int = 0
