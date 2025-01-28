@@ -6,7 +6,7 @@ T = TypeVar("T")
 
 
 class Node(Generic[T]):
-    def __init__(self, data: T) -> Node:
+    def __init__(self, data: T) -> None:
         self.__next: Optional[Node[T]] = None
         self.__data = data
 
