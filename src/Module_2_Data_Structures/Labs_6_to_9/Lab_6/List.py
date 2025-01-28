@@ -133,6 +133,9 @@ class List(Generic[T]):
     def size(self) -> int:
         return self.__size
 
+    def __len__(self) -> int:
+        return self.size()
+
     def is_empty(self) -> bool:
         return self.size() == 0
 
