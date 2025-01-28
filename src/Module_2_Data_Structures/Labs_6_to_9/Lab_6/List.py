@@ -114,6 +114,9 @@ class List(Generic[T]):
     def __getitem__(self, index: int) -> T:
         return self.node_at(index).get_data()
 
+    def __setitem__(self, index: int, data: T):
+        self.node_at(index).set_data(data)
+
     def node_at(self, index: int) -> Node[T]:
         if index < 0:
             index = self.__size - abs(index)
