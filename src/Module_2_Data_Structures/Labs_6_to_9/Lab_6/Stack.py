@@ -22,7 +22,7 @@ class Stack(Generic[T]):
         return self.items.is_empty()
 
     def push(self, data: T):
-        self.items.push_back()
+        self.items.push_back(data)
 
     def pop(self) -> T:
         return self.items.pop_back()
