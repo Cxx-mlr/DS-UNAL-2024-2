@@ -1,0 +1,107 @@
+;;KM;Minutos
+Medellin;Manizales;196;248
+Medellin;Pereira;238;292
+Manizales;Pereira;53;68
+Pereira;Armenia;46;56
+Pereira;Cartago;30;42
+Cartago;Armenia;50;72
+Cartago;Tulua;87;75
+Armenia;Tulua;87;84
+Tulua;Buga;28;32
+Buga;Buenaventura;111;123
+Buga;Cali;66;73
+Buga ;Palmira;52;47
+Palmira;Cali;30;43
+Cali;Popayan;140;176
+Popayan;Pitalito;157;232
+Pitalito;Mocoa;134;180
+Mocoa;Pasto;146;286
+Popayan;Pasto;244;309
+Pitalito;Florencia;112;172
+Pitalito;Neiva;187;220
+Popayan;Neiva;271;361
+Neiva;El Espinal;156;124
+El Espinal;Ibague;56;56
+Ibague;Armenia;80;131
+Ibague;Mariquita;121;124
+Mariquita;Manizales;119;194
+Ibague;Melgar;86;75
+El Espinal;Melgar;40;41
+Girardot;Melgar;24;28
+Girardot;Ibague;68;65
+Melgar;Fusagasuga;46;55
+Girardot;Anapoima;53;65
+Anapoima;Funza;71;103
+Fusagasuga;Soacha;45;82
+Soacha;Bogota;25;50
+Funza;Bogota;22;38
+Funza;Mariquita;170;216
+Bogota;La Dorada;191;222
+La Dorada;Medellin;243;271
+Bogota;Zipaquira;42;48
+Bogota;Guatavita;51;79
+Zipaquira;Guatavita;51;60
+Bogota;Tunja;141;128
+Bogota;Villavicencio;123;176
+Medellin;Tunja;413;497
+Tunja;Duitama;58;58
+Duitama;Sogamoso;20;30
+Sogamoso;Yopal;130;274
+Bogota;Bucaramanga;398;524
+Tunja;Bucaramanga;282;381
+Medellin;Bucaramanga;383;386
+Villavicencio;San Jose del Guaviare;284;283
+Medellin;Quibdo;230;331
+Manizales;Quibdo;273;375
+Medellin;Necocli;383;484
+Necocli;Monteria;148;182
+Medellin;Caucasia;284;388
+Caucasia;Medellin;122;120
+Caucasia;Bucaramanga;505;622
+Monteria;Sincelejo;122;129
+Monteria;Cartagena;259;280
+Sincelejo;Cartagena;197;248
+Sincelejo;Barranquilla;239;255
+Cartagena;Barranquilla;131;175
+Barranquilla;Bucaramanga;633;726
+Sincelejo;Valledupar;388;446
+Barranquilla;Valledupar;308;342
+Barranquilla;Santa Marta;104;126
+Santa Marta;Riohacha;172;173
+Valledupar;Riohacha;159;205
+Valledupar;Cucuta;547;664
+Cucuta;Bucaramanga;201;328
+Riohacha;Maracaibo;206;241
+Cucuta;Maracaibo;444;479
+Cucuta;San Cristobal;51;92
+Cucuta;Barquisimeto;545;567
+Barquisimeto;Caracas;372;321
+San Cristobal;Caracas;807;680
+Pasto;Quito;331;372
+Quito;Guayaquil;427;452
+Quito ;Santo Domingo;155;178
+Santo Domingo Guayaquil;;281;275
+Guayaquil;Lima;1473;1434
+Lima;Ayacucho;560;612
+Ayacucho;Cusco;571;744
+Lima;Ica;301;291
+Ica;Cusco;798;953
+Cusco;Arequipa;499;590
+Ica;Arequipa;707;764
+Arequipa;Antofagasta;1143;864
+Arequipa ;La Paz;559;605
+La Paz;Cordoba;2012;1560
+Antofagasta;Santiago;1336;892
+Santiago;Cordoba;1041;813
+La Paz;Asuncion;2133;1980
+Cordoba;Asuncion;1241;965
+Asuncion;Montevideo;1332;993
+Cordoba;Buenos Aires;750;539
+Buenos Aires;Montevideo;238;288
+Montevideo;Porto Alegre;806;609
+Asuncion;Porto Alegre;1237;1043
+Asuncion;Sao Paulo;1345;1051
+Porto Alegre;Sao Paulo;1137;848
+La Paz;Sao Paulo;2903;2520
+La Paz;Brasilia;3104;2700
+Sao Paulo;Brasilia;1005;742
