@@ -4,28 +4,34 @@ import sys
 import csv
 from rich.console import Console
 from rich.table import Table
+import itertools
 
 T = TypeVar("T")
 Matrix: TypeAlias = List[List[T]]
 
-def floyd_warshall(matrix: Matrix[int]) -> Matrix[int]:
+
+def floyd_warshall(matrix: Matrix[int]) -> Tuple[Matrix[int], Matrix[int]]:
     n = len(matrix)
     dist = [[sys.maxsize] * n for _ in range(n)]
+    next_node = [[-1] * n for _ in range(n)]
 
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                dist[i][j] = 0
-            elif matrix[i][j] != 0:
-                dist[i][j] = matrix[i][j]
+    for i, j in itertools.product(*itertools.tee(range(n))):
+        if i == j:
+            dist[i][j] = 0
+        elif matrix[i][j] != 0:
+            dist[i][j] = matrix[i][j]
+            next_node[i][j] = j
 
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
-                if dist[i][j] > dist[i][k] + dist[k][j]:
-                    dist[i][j] = dist[i][k] + dist[k][j]
-                    
-    return dist
+    for k, i, j in itertools.product(*itertools.tee(range(n), 3)):
+        if (
+            dist[i][k] != sys.maxsize
+            and dist[k][j] != sys.maxsize
+            and dist[i][j] > dist[i][k] + dist[k][j]
+        ):
+            dist[i][j] = dist[i][k] + dist[k][j]
+            next_node[i][j] = next_node[i][k]
+
+    return dist, next_node
 
 def load_data(filename: str) -> Tuple[Set[str], Tuple[str, str, Unpack[Tuple[int, ...]]]]:
     road_data_path = Path(__file__).parent / "data" / filename
