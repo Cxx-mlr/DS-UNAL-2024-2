@@ -76,6 +76,11 @@ def build_adj_matrices(
 
     return adj_matrices
 
+
+def is_adjacent(matrix: Matrix[T], node_x: int, node_y: int) -> bool:
+    return matrix[node_x][node_y] != 0
+
+
 def graph_density(matrix: Matrix[int]) -> str:
     n = len(matrix)
     edge_count = sum(1 for i in range(n) for j in range(n) if matrix[i][j] != 0)
