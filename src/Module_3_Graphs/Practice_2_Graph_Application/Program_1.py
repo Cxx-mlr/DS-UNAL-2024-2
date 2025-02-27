@@ -118,6 +118,12 @@ def main():
     shortest_paths_minutes = floyd_warshall(adj_matrix_minutes)
 
     city_index = {city: idx for idx, city in enumerate(cities)}
+
+    def ensure_city(city: str) -> int:
+        if (idx := city_index.get(city)) is None:
+            console.print(f"[red]No se encontró la ciudad {city!r}[/]")
+        return idx
+
     def shortest_path(start_city: str, end_city: str):
         if (start_idx := city_index.get(start_city)) is None:
             print(f"No se encontró la ciudad {start_city!r}")
