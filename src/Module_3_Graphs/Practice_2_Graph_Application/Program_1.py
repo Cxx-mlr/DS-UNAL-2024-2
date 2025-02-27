@@ -141,6 +141,46 @@ def main():
             f"Distancia más corta de {start_city!r} a {end_city!r}"
             f" : {shortest_paths_minutes[start_idx][end_idx]} minutos"
         )
+        print(end="\t")
+        display_shortest_path(start_city, end_city, next_nodes=next_nodes_minutes)
+
+    def check_adjacency(start_city: str, end_city: str):
+        start_idx = ensure_city(start_city)
+        end_idx = ensure_city(end_city)
+
+        if start_idx is None or end_idx is None:
+            return
+
+        adjacent = is_adjacent(adj_matrix_km, start_idx, end_idx)
+        console.print(
+            f"\nLas ciudades [blue]{start_city!r}[/] y [blue]{end_city!r}[/] {'son' if adjacent else 'no son'} adyacentes."
+        )
+
+    index_city = {idx: city for city, idx in city_index.items()}
+
+    def display_shortest_path(start_city: str, end_city: str, next_nodes: Matrix[int]):
+        start_idx = ensure_city(start_city)
+        end_idx = ensure_city(end_city)
+
+        if (
+            start_idx is None
+            or end_idx is None
+            or next_nodes_km[start_idx][end_idx] == -1
+        ):
+            console.print(f"[red]No hay ruta entre {start_city} y {end_city}.[/]")
+            return
+
+        path = []
+        current = start_idx
+        while current != end_idx:
+            path.append(index_city[current])
+            current = next_nodes_km[current][end_idx]
+        path.append(end_city)
+
+        console.print("[yellow]" + " -> ".join(path))
+
+    start_city = "Medellin"
+    end_city = "Armenia"
 
     shortest_path("Bogota", "Valledupar")
 
