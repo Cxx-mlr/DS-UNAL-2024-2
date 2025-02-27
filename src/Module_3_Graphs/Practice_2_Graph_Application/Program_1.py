@@ -33,7 +33,10 @@ def floyd_warshall(matrix: Matrix[int]) -> Tuple[Matrix[int], Matrix[int]]:
 
     return dist, next_node
 
-def load_data(filename: str) -> Tuple[Set[str], Tuple[str, str, Unpack[Tuple[int, ...]]]]:
+
+def load_data(
+    filename: str,
+) -> Tuple[Set[str], Tuple[str, str, Unpack[Tuple[int, ...]]]]:
     road_data_path = Path(__file__).parent / "data" / filename
     with open(road_data_path, "rt", encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=";")
@@ -54,19 +57,16 @@ def load_data(filename: str) -> Tuple[Set[str], Tuple[str, str, Unpack[Tuple[int
 
     return nodes, edges
 
+
 def build_adj_matrices(
     nodes: Iterable[str], edges: Tuple[str, str, Unpack[Tuple[int, ...]]]
-) -> List[
-    Matrix[T]
-]:
+) -> List[Matrix[int]]:
     node_list = list(nodes)
     node_index = {node: idx for idx, node in enumerate(node_list)}
     n = len(node_list)
     weights_size = len(edges[0]) - 2 if edges else 1
 
-    adj_matrices = [
-        [[0] * n for _ in range(n)] for _ in range(weights_size)
-    ]
+    adj_matrices = [[[0] * n for _ in range(n)] for _ in range(weights_size)]
 
     for node_x, node_y, *weights in edges:
         i, j = node_index[node_x], node_index[node_y]
@@ -89,6 +89,7 @@ def graph_density(matrix: Matrix[int]) -> str:
 
     return "disperso" if density < 0.5 else "denso"
 
+
 def main():
     cities, edges = load_data("road-data.csv")
     adj_matrix_km, adj_matrix_minutes = build_adj_matrices(nodes=cities, edges=edges)
@@ -97,7 +98,7 @@ def main():
     num_nodes = len(cities)
     num_edges = len(edges)
 
-    table = Table(title="Información del Grafo")
+    table = Table(title="[green]Información del Grafo")
 
     table.add_column("Propiedad", justify="right", style="cyan", no_wrap=True)
     table.add_column("Valor", style="magenta")
@@ -107,15 +108,22 @@ def main():
     table.add_row("Densidad", density)
 
     table.add_row("Complejidad Floyd-Warshall", "O(n^3)")
-    table.add_row("Complejidad Floyd-Warshall (nodos)", f"O({num_nodes}^3) = {num_nodes ** 3}")
+    table.add_row(
+        "Complejidad Floyd-Warshall (nodos)", f"O({num_nodes}^3) = {num_nodes ** 3}"
+    )
     table.add_row("Espacio Auxiliar Floyd-Warshall", "O(n^2)")
-    table.add_row("Espacio Auxiliar Floyd-Warshall (nodos)", f"O({num_nodes}^2) = {num_nodes ** 2}")
+    table.add_row(
+        "Espacio Auxiliar Floyd-Warshall (nodos)",
+        f"O({num_nodes}^2) = {num_nodes ** 2}",
+    )
 
     console = Console()
+    print()
     console.print(table)
+    print()
 
-    shortest_paths_km = floyd_warshall(adj_matrix_km)
-    shortest_paths_minutes = floyd_warshall(adj_matrix_minutes)
+    shortest_paths_km, next_nodes_km = floyd_warshall(adj_matrix_km)
+    shortest_paths_minutes, next_nodes_minutes = floyd_warshall(adj_matrix_minutes)
 
     city_index = {city: idx for idx, city in enumerate(cities)}
 
@@ -125,20 +133,23 @@ def main():
         return idx
 
     def shortest_path(start_city: str, end_city: str):
-        if (start_idx := city_index.get(start_city)) is None:
-            print(f"No se encontró la ciudad {start_city!r}")
+        start_idx = ensure_city(start_city)
+        end_idx = ensure_city(end_city)
+
+        if start_idx is None or end_idx is None:
             return
 
-        if (end_idx := city_index.get(end_city)) is None:
-            print(f"No se encontró la ciudad {end_city!r}")
-            return
-
-        print(
-            f"Distancia más corta de {start_city!r} a {end_city!r}"
+        console.print(
+            f"- Distancia más corta de {start_city!r} a {end_city!r}"
             f" : {shortest_paths_km[start_idx][end_idx]} km"
         )
-        print(
-            f"Distancia más corta de {start_city!r} a {end_city!r}"
+        print(end="\t")
+        display_shortest_path(start_city, end_city, next_nodes=next_nodes_km)
+
+        print()
+
+        console.print(
+            f"- Distancia más corta de {start_city!r} a {end_city!r}"
             f" : {shortest_paths_minutes[start_idx][end_idx]} minutos"
         )
         print(end="\t")
@@ -182,7 +193,8 @@ def main():
     start_city = "Medellin"
     end_city = "Armenia"
 
-    shortest_path("Bogota", "Valledupar")
+    shortest_path(start_city, end_city)
+    check_adjacency(start_city, end_city)
 
 
 if __name__ == "__main__":
