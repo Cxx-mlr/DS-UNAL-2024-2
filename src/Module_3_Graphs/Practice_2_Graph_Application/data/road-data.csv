@@ -10,7 +10,7 @@ Armenia;Tulua;87;84
 Tulua;Buga;28;32
 Buga;Buenaventura;111;123
 Buga;Cali;66;73
-Buga ;Palmira;52;47
+Buga;Palmira;52;47
 Palmira;Cali;30;43
 Cali;Popayan;140;176
 Popayan;Pitalito;157;232
@@ -79,8 +79,8 @@ Barquisimeto;Caracas;372;321
 San Cristobal;Caracas;807;680
 Pasto;Quito;331;372
 Quito;Guayaquil;427;452
-Quito ;Santo Domingo;155;178
-Santo Domingo Guayaquil;;281;275
+Quito;Santo Domingo;155;178
+Santo Domingo;Guayaquil;281;275
 Guayaquil;Lima;1473;1434
 Lima;Ayacucho;560;612
 Ayacucho;Cusco;571;744
@@ -89,7 +89,7 @@ Ica;Cusco;798;953
 Cusco;Arequipa;499;590
 Ica;Arequipa;707;764
 Arequipa;Antofagasta;1143;864
-Arequipa ;La Paz;559;605
+Arequipa;La Paz;559;605
 La Paz;Cordoba;2012;1560
 Antofagasta;Santiago;1336;892
 Santiago;Cordoba;1041;813
