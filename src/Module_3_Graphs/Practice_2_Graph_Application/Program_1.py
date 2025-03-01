@@ -91,12 +91,12 @@ def graph_density(matrix: Matrix[int]) -> str:
     return "disperso" if density < 0.5 else "denso"
 
 
-def main():
-    cities, edges = load_data("road-data.csv")
-    adj_matrix_km, adj_matrix_minutes = build_adj_matrices(nodes=cities, edges=edges)
+def main(filename: str):
+    header, nodes, edges = load_data(filename=filename)
+    adj_matrix_km, adj_matrix_minutes = build_adj_matrices(nodes=nodes, edges=edges)
 
     density = graph_density(adj_matrix_km)
-    num_nodes = len(cities)
+    num_nodes = len(nodes)
     num_edges = len(edges)
 
     table = Table(title="[green]Información del Grafo")
@@ -109,14 +109,7 @@ def main():
     table.add_row("Densidad", density)
 
     table.add_row("Complejidad Floyd-Warshall", "O(n^3)")
-    table.add_row(
-        "Complejidad Floyd-Warshall (nodos)", f"O({num_nodes}^3) = {num_nodes ** 3}"
-    )
     table.add_row("Espacio Auxiliar Floyd-Warshall", "O(n^2)")
-    table.add_row(
-        "Espacio Auxiliar Floyd-Warshall (nodos)",
-        f"O({num_nodes}^2) = {num_nodes ** 2}",
-    )
 
     console = Console()
     print()
@@ -126,77 +119,77 @@ def main():
     shortest_paths_km, next_nodes_km = floyd_warshall(adj_matrix_km)
     shortest_paths_minutes, next_nodes_minutes = floyd_warshall(adj_matrix_minutes)
 
-    city_index = {city: idx for idx, city in enumerate(cities)}
+    node_index = {node: idx for idx, node in enumerate(nodes)}
 
-    def ensure_city(city: str) -> int:
-        if (idx := city_index.get(city)) is None:
-            console.print(f"[red]No se encontró la ciudad {city!r}[/]")
+    def ensure_node(node: str) -> int:
+        if (idx := node_index.get(node)) is None:
+            console.print(f"[red]No se encontró el nodo {node!r}[/]")
         return idx
 
-    def shortest_path(start_city: str, end_city: str):
-        start_idx = ensure_city(start_city)
-        end_idx = ensure_city(end_city)
+    def shortest_path(start_node: str, end_node: str):
+        start_idx = ensure_node(start_node)
+        end_idx = ensure_node(end_node)
 
         if start_idx is None or end_idx is None:
             return
 
         console.print(
-            f"- Distancia más corta de {start_city!r} a {end_city!r}"
+            f"- Distancia más corta de {start_node!r} a {end_node!r}"
             f" : {shortest_paths_km[start_idx][end_idx]} km"
         )
         print(end="\t")
-        display_shortest_path(start_city, end_city, next_nodes=next_nodes_km)
+        display_shortest_path(start_node, end_node, next_nodes=next_nodes_km)
 
         print()
 
         console.print(
-            f"- Distancia más corta de {start_city!r} a {end_city!r}"
+            f"- Distancia más corta de {start_node!r} a {end_node!r}"
             f" : {shortest_paths_minutes[start_idx][end_idx]} minutos"
         )
         print(end="\t")
-        display_shortest_path(start_city, end_city, next_nodes=next_nodes_minutes)
+        display_shortest_path(start_node, end_node, next_nodes=next_nodes_minutes)
 
-    def check_adjacency(start_city: str, end_city: str):
-        start_idx = ensure_city(start_city)
-        end_idx = ensure_city(end_city)
+    def check_adjacency(start_node: str, end_node: str):
+        start_idx = ensure_node(start_node)
+        end_idx = ensure_node(end_node)
 
         if start_idx is None or end_idx is None:
             return
 
         adjacent = is_adjacent(adj_matrix_km, start_idx, end_idx)
         console.print(
-            f"\nLas ciudades [blue]{start_city!r}[/] y [blue]{end_city!r}[/] {'son' if adjacent else 'no son'} adyacentes."
+            f"\nLos nodos [blue]{start_node!r}[/] y [blue]{end_node!r}[/] {'son' if adjacent else 'no son'} adyacentes."
         )
 
-    index_city = {idx: city for city, idx in city_index.items()}
+    index_node = {idx: node for node, idx in node_index.items()}
 
-    def display_shortest_path(start_city: str, end_city: str, next_nodes: Matrix[int]):
-        start_idx = ensure_city(start_city)
-        end_idx = ensure_city(end_city)
+    def display_shortest_path(start_node: str, end_node: str, next_nodes: Matrix[int]):
+        start_idx = ensure_node(start_node)
+        end_idx = ensure_node(end_node)
 
         if (
             start_idx is None
             or end_idx is None
-            or next_nodes_km[start_idx][end_idx] == -1
+            or next_nodes[start_idx][end_idx] == -1
         ):
-            console.print(f"[red]No hay ruta entre {start_city} y {end_city}.[/]")
+            console.print(f"[red]No hay ruta entre {start_node} y {end_node}.[/]")
             return
 
         path = []
         current = start_idx
         while current != end_idx:
-            path.append(index_city[current])
-            current = next_nodes_km[current][end_idx]
-        path.append(end_city)
+            path.append(index_node[current])
+            current = next_nodes[current][end_idx]
+        path.append(end_node)
 
         console.print("[yellow]" + " -> ".join(path))
 
-    start_city = "Medellin"
-    end_city = "Armenia"
+    start_node = "Medellin"
+    end_node = "Armenia"
 
-    shortest_path(start_city, end_city)
-    check_adjacency(start_city, end_city)
+    shortest_path(start_node, end_node)
+    check_adjacency(start_node, end_node)
 
 
 if __name__ == "__main__":
-    main()
+    main(filename="road-data.csv")
