@@ -46,6 +46,7 @@ def load_data(
 
         for line_count, row in enumerate(csv_reader):
             if line_count == 0:
+                header = row
                 continue
 
             node_x, node_y, km, minutes = row
@@ -55,7 +56,7 @@ def load_data(
 
             edges.append((node_x, node_y, int(km), int(minutes)))
 
-    return nodes, edges
+    return header, nodes, edges
 
 
 def build_adj_matrices(
