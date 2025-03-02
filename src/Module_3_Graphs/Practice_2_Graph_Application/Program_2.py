@@ -1,10 +1,10 @@
 from Graph import Graph
 
 def main():
-    graph = Graph(filename="road-data.csv")
+    graph = Graph(filename="test-data.csv")
 
-    start_node = "Medellin"
-    end_node = "Bogota"
+    start_node = "A"
+    end_node = "F"
 
     graph.display_info()
     graph.shortest_path(start_node, end_node)
